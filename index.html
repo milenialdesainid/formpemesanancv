@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pemesanan CV</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Theme Colors */
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-tertiary: #1a1a1d;
+            --surface: #202024;
+            --surface-hover: #2a2a2f;
+            
+            /* Accent Colors */
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --text-disabled: #52525b;
+            
+            /* Border Colors */
+            --border-primary: #27272a;
+            --border-secondary: #3f3f46;
+            --border-accent: #6366f1;
+            
+            /* Typography Scale */
+            --font-xs: 0.75rem;    /* 12px */
+            --font-sm: 0.875rem;   /* 14px */
+            --font-base: 1rem;     /* 16px */
+            --font-lg: 1.125rem;   /* 18px */
+            --font-xl: 1.25rem;    /* 20px */
+            --font-2xl: 1.5rem;    /* 24px */
+            --font-3xl: 1.875rem;  /* 30px */
+            --font-4xl: 2.25rem;   /* 36px */
+            
+            /* Spacing Scale */
+            --space-1: 0.25rem;   /* 4px */
+            --space-2: 0.5rem;    /* 8px */
+            --space-3: 0.75rem;   /* 12px */
+            --space-4: 1rem;      /* 16px */
+            --space-5: 1.25rem;   /* 20px */
+            --space-6: 1.5rem;    /* 24px */
+            --space-8: 2rem;      /* 32px */
+            --space-10: 2rem;     /* 32px */
+            --space-12: 2.5rem;   /* 40px */
+            --space-16: 3rem;     /* 48px */
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Radius */
+            --radius-sm: 0.375rem;  /* 6px */
+            --radius-md: 0.5rem;    /* 8px */
+            --radius-lg: 0.75rem;   /* 12px */
+            --radius-xl: 1rem;      /* 16px */
+            --radius-2xl: 1.5rem;   /* 24px */
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            font-size: var(--font-base);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Container */
+        .form-container {
+            max-width: 56rem; /* 896px */
+            margin: 0 auto;
+            padding: var(--space-6) var(--space-4);
+        }
+
+        .form-wrapper {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-2xl);
+            border: 1px solid var(--border-primary);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            padding: var(--space-10) var(--space-8) var(--space-8);
+            border-bottom: 1px solid var(--border-primary);
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin-bottom: var(--space-8);
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--border-secondary);
+            border-radius: 1px;
+            z-index: 1;
+        }
+
+        .progress-line-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 1px;
+            transition: width var(--transition-slow);
+            width: 33.33%;
+        }
+
+        .step {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid var(--border-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: var(--font-sm);
+            color: var(--text-muted);
+            position: relative;
+            z-index: 2;
+            transition: all var(--transition-normal);
+        }
+
+        .step.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+        }
+
+        .step.completed {
+            background: var(--accent-success);
+            border-color: var(--accent-success);
+            color: white;
+        }
+
+        .step.completed::after {
+            content: '✓';
+            font-size: var(--font-sm);
+            font-weight: 700;
+        }
+
+        .step-label {
+            position: absolute;
+            top: calc(100% + var(--space-3));
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: var(--font-xs);
+            font-weight: 500;
+            color: var(--text-muted);
+            white-space: nowrap;
+            transition: color var(--transition-normal);
+        }
+
+        .step.active .step-label {
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        /* Form Content */
+        .form-content {
+            padding: var(--space-8);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Typography */
+        .page-title {
+            font-size: var(--font-3xl);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: var(--space-4);
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: var(--space-8);
+            font-size: var(--font-base);
+            font-weight: 400;
+            max-width: 32rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Product Display */
+        .product-display {
+            background: var(--surface);
+            padding: var(--space-5);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-primary);
+            margin-bottom: var(--space-6);
+            text-align: center;
+        }
+
+        .product-display h3 {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-3);
+            font-size: var(--font-base);
+            font-weight: 500;
+        }
+
+        .product-preview {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: var(--space-4);
+            text-align: center;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: var(--font-lg);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: var(--space-6);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--space-2);
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: var(--font-sm);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: var(--space-4) var(--space-5);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-base);
+            font-family: inherit;
+            font-weight: 400;
+            background: var(--surface);
+            color: var(--text-primary);
+            transition: all var(--transition-normal);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 7rem;
+        }
+
+        .required {
+            color: var(--accent-danger);
+            font-weight: 600;
+        }
+
+        /* Two Column Layout - Only for specific fields */
+        .birth-location-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+        }
+
+        /* Radio Groups */
+        .radio-group {
+            display: grid;
+            gap: var(--space-3);
+            margin-top: var(--space-4);
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            padding: var(--space-4);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            background: var(--surface);
+        }
+
+        .radio-option:hover {
+            border-color: var(--accent-primary);
+            background: var(--surface-hover);
+        }
+
+        .radio-option.selected {
+            border-color: var(--accent-primary);
+            background: var(--surface-hover);
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: var(--space-4);
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: var(--accent-primary);
+            margin-top: var(--space-1);
+        }
+
+        .radio-option label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .radio-option .package-price {
+            color: var(--accent-success);
+            font-weight: 700;
+            font-size: var(--font-lg);
+        }
+
+        /* Package Info */
+        .package-info {
+            margin-top: var(--space-4);
+            padding: var(--space-5);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-secondary);
+            display: none;
+        }
+
+        .package-info h4 {
+            color: var(--accent-success);
+            margin-bottom: var(--space-4);
+            font-size: var(--font-lg);
+            font-weight: 700;
+        }
+
+        .package-section {
+            margin-bottom: var(--space-4);
+        }
+
+        .package-section h5 {
+            color: var(--text-primary);
+            font-size: var(--font-base);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .check-icon {
+            color: var(--accent-success);
+            font-weight: 700;
+        }
+
+        .sub-items {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 var(--space-3) var(--space-6);
+        }
+
+        .sub-items li {
+            margin-bottom: var(--space-1);
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: var(--font-sm);
+            position: relative;
+        }
+
+        .sub-items li:before {
+            content: "•";
+            position: absolute;
+            left: -1rem;
+            color: var(--text-muted);
+        }
+
+        .estimation {
+            background: rgba(16, 185, 129, 0.1);
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-lg);
+            color: var(--accent-success);
+            font-weight: 600;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            font-size: var(--font-sm);
+            margin-top: var(--space-3);
+        }
+
+        /* Language Table */
+        .language-section {
+            margin-top: var(--space-4);
+        }
+
+        .main-languages {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+
+        .language-option {
+            background: var(--surface);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+        }
+
+        .language-option h4 {
+            font-size: var(--font-base);
+            font-weight: 600;
+            margin-bottom: var(--space-3);
+            color: var(--text-primary);
+        }
+
+        .language-levels {
+            display: flex;
+            gap: var(--space-3);
+        }
+
+        .language-levels label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--font-sm);
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .language-levels input[type="radio"] {
+            width: 1rem;
+            height: 1rem;
+            accent-color: var(--accent-primary);
+        }
+
+        .additional-language {
+            background: var(--surface);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+        }
+
+        .additional-language label {
+            font-size: var(--font-sm);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .additional-language input {
+            font-size: var(--font-sm);
+            padding: var(--space-3) var(--space-4);
+        }
+
+        /* Field Descriptions */
+        .field-description {
+            background: var(--bg-tertiary);
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-3);
+            border-left: 3px solid var(--accent-primary);
+            font-size: var(--font-sm);
+        }
+
+        .field-description .desc-title {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            font-size: var(--font-sm);
+        }
+
+        .field-description .desc-content {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: var(--space-2);
+        }
+
+        .field-description .desc-example {
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: var(--font-xs);
+            line-height: 1.4;
+        }
+
+        /* Next Steps Section */
+        .next-steps {
+            background: var(--bg-tertiary);
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-secondary);
+            margin-bottom: var(--space-6);
+        }
+
+        .next-steps h3 {
+            color: var(--accent-success);
+            font-size: var(--font-xl);
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+            text-align: center;
+        }
+
+        .next-steps-content {
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .next-steps-content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .next-steps-content ul {
+            margin: var(--space-3) 0 var(--space-3) var(--space-5);
+            list-style: none;
+        }
+
+        .next-steps-content li {
+            margin-bottom: var(--space-1);
+            position: relative;
+        }
+
+        .next-steps-content li:before {
+            content: "•";
+            position: absolute;
+            left: -1rem;
+            color: var(--accent-success);
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: var(--space-4);
+            margin-top: var(--space-8);
+            justify-content: center;
+        }
+
+        .btn {
+            padding: var(--space-3) var(--space-6);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: var(--font-base);
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            min-width: 7rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            background: #5855eb;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+            border-color: var(--border-secondary);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: var(--space-4);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: var(--font-lg);
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-normal);
+            margin-top: var(--space-6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: var(--space-4) var(--space-3);
+            }
+            
+            .progress-section,
+            .form-content {
+                padding: var(--space-6);
+            }
+            
+            .page-title {
+                font-size: var(--font-2xl);
+            }
+            
+            .page-subtitle {
+                font-size: var(--font-sm);
+                margin-bottom: var(--space-6);
+            }
+            
+            .step {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+
+            .birth-location-row {
+                grid-template-columns: 1fr;
+            }
+
+            .main-languages {
+                grid-template-columns: 1fr;
+            }
+
+            .language-levels {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .step-label {
+                font-size: 10px;
+            }
+            
+            .page-title {
+                font-size: var(--font-xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-wrapper">
+            <!-- Progress Bar -->
+            <div class="progress-section">
+                <div class="progress-bar">
+                    <div class="progress-line">
+                        <div class="progress-line-fill" id="progressFill"></div>
+                    </div>
+                    <div class="step active" id="step1">
+                        1
+                        <div class="step-label">Pilih Produk</div>
+                    </div>
+                    <div class="step" id="step2">
+                        2
+                        <div class="step-label">Data Pribadi</div>
+                    </div>
+                    <div class="step" id="step3">
+                        3
+                        <div class="step-label">Selesai</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-content">
+                <form action="https://formspree.io/f/xjkowarp" method="POST" id="cvForm" enctype="multipart/form-data">
+                    
+                    <!-- PAGE 1: Product Selection & Package -->
+                    <div class="page active" id="page1">
+                        <h1 class="page-title">Form Pemesanan</h1>
+                        <p class="page-subtitle">Pilih desain CV yang Anda inginkan dan paket yang sesuai kebutuhan</p>
+                        
+                        <!-- Desain yang Dipilih -->
+                        <div class="product-display">
+                            <h3>Desain yang Dipilih:</h3>
+                            <div class="product-preview" id="selectedProductPreview">
+                                Tidak ada produk dipilih - Silakan kembali ke website untuk memilih produk
+                            </div>
+                        </div>
+
+                        <!-- Pilih Paket -->
+                        <div class="form-group">
+                            <label>Pilih Paket <span class="required">*</span></label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="basic" name="paket" value="Paket Basic" required>
+                                    <label for="basic">
+                                        <div>
+                                            <strong>Paket Basic</strong>
+                                            <span class="package-price"> – Rp.50.000</span>
+                                        </div>
+                                        <div style="color: var(--text-muted); font-size: var(--font-sm); margin-top: 4px;">
+                                            CV + Surat Lamaran + Berkas Pendukung
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="premium" name="paket" value="Paket Premium" required>
+                                    <label for="premium">
+                                        <div>
+                                            <strong>Paket Premium</strong>
+                                            <span class="package-price"> – Rp.120.000</span>
+                                        </div>
+                                        <div style="color: var(--text-muted); font-size: var(--font-sm); margin-top: 4px;">
+                                            Semua fitur Basic + Extra benefits
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Package Info -->
+                            <div id="packageInfo" class="package-info">
+                                <div id="packageDetails"></div>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn btn-primary" onclick="nextPage()">
+                                Lanjutkan
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="9,18 15,12 9,6"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PAGE 2: Personal Data -->
+                    <div class="page" id="page2">
+                        <h1 class="page-title">Data Pribadi</h1>
+                        <p class="page-subtitle">Lengkapi informasi pribadi dan keahlian Anda dengan detail</p>
+
+                        <!-- Nama Lengkap -->
+                        <div class="form-group">
+                            <label for="nama">Nama Lengkap <span class="required">*</span></label>
+                            <input type="text" id="nama" name="nama_lengkap" placeholder="Masukkan nama lengkap Anda" required>
+                        </div>
+
+                        <!-- Nomor Ponsel -->
+                        <div class="form-group">
+                            <label for="nomor_ponsel">Nomor Ponsel / WhatsApp <span class="required">*</span></label>
+                            <input type="tel" id="nomor_ponsel" name="nomor_ponsel" placeholder="08123456789" required>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email">Email <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="nama@email.com" required>
+                        </div>
+
+                        <!-- LinkedIn -->
+                        <div class="form-group">
+                            <label for="linkedin">LinkedIn / Media Sosial <span class="required">*</span></label>
+                            <input type="text" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/username" required>
+                        </div>
+
+                        <!-- Tempat & Tanggal Lahir -->
+                        <div class="birth-location-row">
+                            <div class="form-group">
+                                <label for="tempat_lahir">Tempat Lahir <span class="required">*</span></label>
+                                <input type="text" id="tempat_lahir" name="tempat_lahir" placeholder="Jakarta" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_lahir">Tanggal Lahir <span class="required">*</span></label>
+                                <input type="date" id="tanggal_lahir" name="tanggal_lahir" required>
+                            </div>
+                        </div>
+
+                        <!-- Kota Domisili -->
+                        <div class="form-group">
+                            <label for="kota">Kota Domisili <span class="required">*</span></label>
+                            <input type="text" id="kota" name="kota_domisili" placeholder="Jakarta" required>
+                        </div>
+
+                        <!-- Alamat KTP -->
+                        <div class="form-group">
+                            <label for="alamat">Alamat KTP <span class="required">*</span></label>
+                            <input type="text" id="alamat" name="alamat_ktp" placeholder="Alamat sesuai KTP" required>
+                        </div>
+
+                        <!-- Penguasaan Bahasa -->
+                        <div class="form-group">
+                            <label>Penguasaan Bahasa <span class="required">*</span></label>
+                            <div class="language-section">
+                                <div class="main-languages">
+                                    <div class="language-option">
+                                        <h4>Bahasa Indonesia</h4>
+                                        <div class="language-levels">
+                                            <label>
+                                                <input type="radio" name="bahasa_indonesia" value="Aktif" required>
+                                                Aktif
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="bahasa_indonesia" value="Pasif">
+                                                Pasif
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="language-option">
+                                        <h4>Bahasa Inggris</h4>
+                                        <div class="language-levels">
+                                            <label>
+                                                <input type="radio" name="bahasa_inggris" value="Aktif" required>
+                                                Aktif
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="bahasa_inggris" value="Pasif">
+                                                Pasif
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="bahasa_inggris" value="Tidak">
+                                                Tidak
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="additional-language">
+                                    <label for="bahasa_lain">Bahasa Lain (Opsional)</label>
+                                    <input type="text" id="bahasa_lain" name="bahasa_lain" placeholder="Contoh: Mandarin (Aktif), Jepang (Pasif)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Deskripsi Diri -->
+                        <div class="form-group">
+                            <div class="field-description">
+                                <div class="desc-title">Berikan informasi seperti:</div>
+                                <div class="desc-content">
+                                    1. Latar belakang pendidikan<br>
+                                    2. Keahlian utama<br>
+                                    3. Sifat atau kelebihan dalam bekerja<br>
+                                    4. Tujuan Karir
+                                </div>
+                                <div class="desc-example">
+                                    <strong>Contoh:</strong><br>
+                                    "Lulusan D3 Administrasi Perkantoran dengan pengalaman sebagai staff administrasi selama 1 tahun. Teliti, rapi, dan terbiasa bekerja dengan target. Mampu mengoperasikan Ms. Office dan Google Workspace. Tertarik berkarier di bidang administrasi dan data entry."
+                                </div>
+                            </div>
+                            <label for="deskripsi_diri">Deskripsi Diri <span class="required">*</span></label>
+                            <textarea id="deskripsi_diri" name="deskripsi_diri" placeholder="Tuliskan deskripsi diri Anda..." required></textarea>
+                        </div>
+
+                        <!-- Pengalaman Kerja -->
+                        <div class="form-group">
+                            <div class="field-description">
+                                <div class="desc-title">Format Penulisan Wajib Seperti ini:</div>
+                                <div class="desc-example">
+                                    <strong>Contoh:</strong><br><br>
+                                    Perusahaan : PT. Indonesia Maju<br>
+                                    Jabatan : Manager Marketing<br>
+                                    Lama : 2018 - 2022<br>
+                                    Alasan Berhenti : Mengundurkan diri untuk mencari tantangan baru
+                                </div>
+                            </div>
+                            <label for="pengalaman_kerja">Pengalaman Kerja <span class="required">*</span></label>
+                            <textarea id="pengalaman_kerja" name="pengalaman_kerja" placeholder="Tuliskan pengalaman kerja Anda sesuai format..." required></textarea>
+                        </div>
+
+                        <!-- Riwayat Pendidikan -->
+                        <div class="form-group">
+                            <div class="field-description">
+                                <div class="desc-title">Format Penulisan Wajib Seperti ini:</div>
+                                <div class="desc-example">
+                                    <strong>Contoh:</strong><br><br>
+                                    Nama Sekolah / Universitas : Universitas Indonesia<br>
+                                    Jurusan : Sistem Informasi<br>
+                                    Tahun Lulus : 2020<br>
+                                    Rata-Rata Nilai / IPK (opsional) : IPK 3.75
+                                </div>
+                            </div>
+                            <label for="riwayat_pendidikan">Riwayat Pendidikan <span class="required">*</span></label>
+                            <textarea id="riwayat_pendidikan" name="riwayat_pendidikan" placeholder="Tuliskan riwayat pendidikan Anda sesuai format..." required></textarea>
+                        </div>
+
+                        <!-- Hard Skill -->
+                        <div class="form-group">
+                            <div class="field-description">
+                                <div class="desc-title">Pengertian:</div>
+                                <div class="desc-content">
+                                    Kemampuan teknis yang dapat dipelajari dan biasanya diajarkan di sekolah, pelatihan atau tempat kerja
+                                </div>
+                                <div class="desc-example">
+                                    <strong>Contohnya:</strong><br>
+                                    1. Mengoperasikan Microsoft Excel<br>
+                                    2. Desain grafis dengan Canva<br>
+                                    3. Mengetik cepat (60 WPM)<br>
+                                    4. Programming Python<br>
+                                    5. Adobe Photoshop
+                                </div>
+                            </div>
+                            <label for="hard_skill">Hard Skill <span class="required">*</span></label>
+                            <textarea id="hard_skill" name="hard_skill" placeholder="Tuliskan hard skill Anda..." required></textarea>
+                        </div>
+
+                        <!-- Soft Skill -->
+                        <div class="form-group">
+                            <div class="field-description">
+                                <div class="desc-title">Pengertian:</div>
+                                <div class="desc-content">
+                                    Kemampuan non-teknis yang berkaitan dengan kepribadian, sikap, dan cara berinteraksi
+                                </div>
+                                <div class="desc-example">
+                                    <strong>Contohnya:</strong><br>
+                                    1. Public Speaking<br>
+                                    2. Manajemen Waktu<br>
+                                    3. Cepat Beradaptasi<br>
+                                    4. Komunikasi Efektif<br>
+                                    5. Leadership
+                                </div>
+                            </div>
+                            <label for="soft_skill">Soft Skill <span class="required">*</span></label>
+                            <textarea id="soft_skill" name="soft_skill" placeholder="Tuliskan soft skill Anda..." required></textarea>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn btn-secondary" onclick="prevPage()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="15,18 9,12 15,6"></polyline>
+                                </svg>
+                                Kembali
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="nextPage()">
+                                Lanjutkan
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="9,18 15,12 9,6"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PAGE 3: Success & Next Steps -->
+                    <div class="page" id="page3">
+                        <h1 class="page-title">Pesanan Berhasil Dikirim!</h1>
+                        <p class="page-subtitle">Terima kasih! Data Anda sudah kami terima dengan baik</p>
+
+                        <!-- Next Steps Information -->
+                        <div class="next-steps">
+                            <h3>Untuk mempercepat proses pengerjaan, silakan lakukan langkah berikut:</h3>
+                            <div class="next-steps-content">
+                                <strong>1. Konfirmasi via WhatsApp</strong><br>
+                                Kirim pesan konfirmasi: "Halo Kak, saya sudah mengisi form pemesanan CV"<br><br>
+
+                                <strong>2. Kirim Bukti Pembayaran</strong><br>
+                                Kirimkan bukti pembayaran di WhatsApp sesuai dengan paket yang dipilih<br><br>
+
+                                <strong>3. Kirim Dokumen Pendukung</strong><br>
+                                Kirimkan dokumen yang akan dilampirkan melalui WhatsApp, seperti:
+                                <ul>
+                                    <li>Ijazah / Sertifikat pendidikan</li>
+                                    <li>SKCK (jika diperlukan)</li>
+                                    <li>Sertifikat keahlian</li>
+                                    <li>Pas foto formal</li>
+                                    <li>Dokumen lain sesuai kebutuhan</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn btn-secondary" onclick="prevPage()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="15,18 9,12 15,6"></polyline>
+                                </svg>
+                                Kembali
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <span id="btnText">Kirim Pesanan</span>
+                                <span id="btnLoading" style="display: none;" class="loading"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hidden fields -->
+                    <input type="hidden" id="selectedProduct" name="produk_dipilih" value="">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 3;
+
+        // Product list mapping URL parameter to display name
+        const products = {
+            'ats1': 'ATS 1',
+            'ats2': 'ATS 2', 
+            'ats3': 'ATS 3',
+            'crv1': 'CRV 1',
+            'crv2': 'CRV 2',
+            'crv3': 'CRV 3',
+            'crv4': 'CRV 4',
+            'crv5': 'CRV 5',
+            'crv6': 'CRV 6',
+            'crv7': 'CRV 7',
+            'mdr1': 'MDR 1',
+            'mdr2': 'MDR 2',
+            'mdr3': 'MDR 3',
+            'mdr4': 'MDR 4'
+        };
+
+        // Package information
+        const packages = {
+            basic: {
+                title: 'Paket Basic – Rp.50.000',
+                sections: [
+                    {
+                        title: '1 file PDF berisi:',
+                        items: ['CV profesional', 'Surat Lamaran kerja', 'Berkas Pendukung lainnya']
+                    }
+                ],
+                estimation: '⏱️ Estimasi pengerjaan: 1–2 hari kerja'
+            },
+            premium: {
+                title: 'Paket Premium – Rp.120.000',
+                sections: [
+                    {
+                        title: '1 file PDF berisi:',
+                        items: ['CV profesional', 'Surat Lamaran kerja', 'Berkas Pendukung lainnya']
+                    },
+                    {
+                        title: 'Tambahan:',
+                        items: [
+                            '1 file JPG (CV)',
+                            'Free konsultasi via chat',
+                            'Kompres 5 file PDF & 5 file JPG',
+                            'Template email lamaran kerja',
+                            'Folder Google Drive pribadi',
+                            '3 foto headshot formal dengan AI'
+                        ]
+                    }
+                ],
+                additionalEstimation: '⏱️ Estimasi pengerjaan: 1–2 hari kerja'
+            }
+        };
+
+        // Initialize form
+        document.addEventListener('DOMContentLoaded', function() {
+            getProductFromURL();
+            setupPackageListeners();
+            updateProgress();
+        });
+
+        // Get product from URL parameter
+        function getProductFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productParam = urlParams.get('product');
+            
+            if (productParam && products[productParam.toLowerCase()]) {
+                updateSelectedProduct(products[productParam.toLowerCase()]);
+            } else {
+                showNoProductSelected();
+            }
+        }
+
+        // Update selected product display
+        function updateSelectedProduct(productName) {
+            const preview = document.getElementById('selectedProductPreview');
+            const hiddenField = document.getElementById('selectedProduct');
+            
+            preview.textContent = productName;
+            preview.style.background = 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))';
+            preview.style.color = 'white';
+            hiddenField.value = productName;
+        }
+
+        // Show no product selected message
+        function showNoProductSelected() {
+            const preview = document.getElementById('selectedProductPreview');
+            preview.textContent = 'Tidak ada produk dipilih - Silakan kembali ke website untuk memilih produk';
+            preview.style.background = 'var(--surface-hover)';
+            preview.style.color = 'var(--text-muted)';
+        }
+
+        // Setup package listeners
+        function setupPackageListeners() {
+            const packageRadios = document.querySelectorAll('input[name="paket"]');
+            packageRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.checked) {
+                        const packageType = this.value.toLowerCase().includes('basic') ? 'basic' : 'premium';
+                        showPackageInfo(packageType);
+                        
+                        // Update radio option styling
+                        document.querySelectorAll('.radio-option').forEach(option => {
+                            option.classList.remove('selected');
+                        });
+                        this.closest('.radio-option').classList.add('selected');
+                    }
+                });
+            });
+        }
+
+        // Show package information
+        function showPackageInfo(packageType) {
+            const packageInfo = document.getElementById('packageInfo');
+            const packageDetails = document.getElementById('packageDetails');
+            const pkg = packages[packageType];
+
+            if (pkg) {
+                let html = `<h4>${pkg.title}</h4>`;
+                
+                // Main sections with sub-items
+                pkg.sections.forEach(section => {
+                    html += `
+                        <div class="package-section">
+                            <h5><span class="check-icon">✔</span> ${section.title}</h5>
+                            <ul class="sub-items">
+                                ${section.items.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                });
+
+                // Add estimation
+                if (pkg.additionalEstimation) {
+                    html += `<div class="estimation" style="margin-top: var(--space-3);">${pkg.additionalEstimation}</div>`;
+                } else if (pkg.estimation) {
+                    html += `<div class="estimation" style="margin-top: var(--space-3);">${pkg.estimation}</div>`;
+                }
+                
+                packageDetails.innerHTML = html;
+                packageInfo.style.display = 'block';
+            }
+        }
+
+        // Navigation functions
+        function nextPage() {
+            if (currentPage < totalPages) {
+                if (validateCurrentPage()) {
+                    currentPage++;
+                    updatePage();
+                    updateProgress();
+                    scrollToTop();
+                }
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePage();
+                updateProgress();
+                scrollToTop();
+            }
+        }
+
+        // Update page display
+        function updatePage() {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show current page
+            document.getElementById(`page${currentPage}`).classList.add('active');
+            
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                step.textContent = index + 1;
+                
+                if (index + 1 === currentPage) {
+                    step.classList.add('active');
+                } else if (index + 1 < currentPage) {
+                    step.classList.add('completed');
+                    step.textContent = '';
+                }
+            });
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const progress = (currentPage / totalPages) * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        // Validate current page
+        function validateCurrentPage() {
+            const currentPageElement = document.getElementById(`page${currentPage}`);
+            const requiredFields = currentPageElement.querySelectorAll('[required]');
+            
+            for (let field of requiredFields) {
+                if (field.type === 'radio') {
+                    const radioGroup = currentPageElement.querySelectorAll(`[name="${field.name}"]`);
+                    const isChecked = Array.from(radioGroup).some(radio => radio.checked);
+                    if (!isChecked) {
+                        field.focus();
+                        showNotification('Mohon lengkapi semua field yang wajib diisi', 'error');
+                        return false;
+                    }
+                } else if (!field.value.trim()) {
+                    field.focus();
+                    field.style.borderColor = 'var(--accent-danger)';
+                    setTimeout(() => {
+                        field.style.borderColor = 'var(--border-primary)';
+                    }, 3000);
+                    showNotification('Mohon lengkapi semua field yang wajib diisi', 'error');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 16px 24px;
+                border-radius: 12px;
+                color: white;
+                font-weight: 600;
+                font-size: 14px;
+                z-index: 9999;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+                max-width: 400px;
+                box-shadow: var(--shadow-xl);
+            `;
+            
+            if (type === 'error') {
+                notification.style.background = 'var(--accent-danger)';
+            } else if (type === 'success') {
+                notification.style.background = 'var(--accent-success)';
+            } else {
+                notification.style.background = 'var(--accent-primary)';
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Hide notification
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 4000);
+        }
+
+        // Smooth scroll to top when changing pages
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Form submission
+        document.getElementById('cvForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateCurrentPage()) {
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnLoading = document.getElementById('btnLoading');
+            
+            // Show loading state
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline-block';
+            submitBtn.disabled = true;
+            
+            // Submit form
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    showNotification('Form berhasil dikirim! Terima kasih atas pesanan Anda.', 'success');
+                    
+                    // Reset form after delay
+                    setTimeout(() => {
+                        this.reset();
+                        currentPage = 1;
+                        updatePage();
+                        updateProgress();
+                        
+                        // Reset product display
+                        getProductFromURL();
+                        
+                        // Reset package info
+                        document.getElementById('packageInfo').style.display = 'none';
+                        
+                        // Reset radio styling
+                        document.querySelectorAll('.radio-option').forEach(option => {
+                            option.classList.remove('selected');
+                        });
+                        
+                    }, 2000);
+                    
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Terjadi kesalahan saat mengirim form. Silakan coba lagi.', 'error');
+            })
+            .finally(() => {
+                // Reset button state
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
