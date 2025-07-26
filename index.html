@@ -1368,12 +1368,13 @@ document.getElementById('cvForm').addEventListener('submit', function(e) {
         const desain = document.getElementById('selectedProduct')?.value || '';
         const paket = document.querySelector('input[name="paket"]:checked')?.value || '';
 
+        // Gunakan \n untuk baris baru, lalu encode semuanya
         const pesanWA = encodeURIComponent(
-            `Halo Kak, saya sudah mengisi form pemesanan CV.%0A` +
-            `Nama: ${nama}%0A` +
-            `Email: ${email}%0A` +
-            `Paket: ${paket}%0A` +
-            `Desain CV: ${desain}%0A%0A` +
+            `Halo Kak, saya sudah mengisi form pemesanan CV.\n` +
+            `Nama: ${nama}\n` +
+            `Email: ${email}\n` +
+            `Paket: ${paket}\n` +
+            `Desain CV: ${desain}\n\n` +
             `Saya akan segera kirimkan bukti pembayaran dan dokumen pendukung. Terima kasih!`
         );
 
