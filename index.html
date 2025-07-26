@@ -1338,68 +1338,73 @@
         }
 
         // Form submission
-        document.getElementById('cvForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (!validateCurrentPage()) {
-                return;
-            }
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const btnLoading = document.getElementById('btnLoading');
-            
-            // Show loading state
-            btnText.style.display = 'none';
-            btnLoading.style.display = 'inline-block';
-            submitBtn.disabled = true;
-            
-            // Submit form
-            const formData = new FormData(this);
-            
-            fetch(this.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    showNotification('Form berhasil dikirim! Terima kasih atas pesanan Anda.', 'success');
-                    
-                    // Reset form after delay
-                    setTimeout(() => {
-                        this.reset();
-                        currentPage = 1;
-                        updatePage();
-                        updateProgress();
-                        
-                        // Reset product display
-                        getProductFromURL();
-                        
-                        // Reset package info
-                        document.getElementById('packageInfo').style.display = 'none';
-                        
-                        // Reset radio styling
-                        document.querySelectorAll('.radio-option').forEach(option => {
-                            option.classList.remove('selected');
-                        });
-                        
-                    }, 2000);
-                    
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showNotification('Terjadi kesalahan saat mengirim form. Silakan coba lagi.', 'error');
-            })
-            .finally(() => {
-                // Reset button state
-                btnText.style.display = 'inline';
-                btnLoading.style.display = 'none';
-                submitBtn.disabled = false;
+document.getElementById('cvForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    if (!validateCurrentPage()) {
+        return;
+    }
+
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnLoading = document.getElementById('btnLoading');
+
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline-block';
+    submitBtn.disabled = true;
+
+    const formData = new FormData(this);
+
+    fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+    })
+    .then(() => {
+        showNotification('Form berhasil dikirim! Terima kasih atas pesanan Anda.', 'success');
+
+        const nama = document.getElementById('nama')?.value || '';
+        const email = document.getElementById('email')?.value || '';
+        const desain = document.getElementById('selectedProduct')?.value || '';
+        const paket = document.querySelector('input[name="paket"]:checked')?.value || '';
+
+        const pesanWA = encodeURIComponent(
+            `Halo Kak, saya sudah mengisi form pemesanan CV.%0A` +
+            `Nama: ${nama}%0A` +
+            `Email: ${email}%0A` +
+            `Paket: ${paket}%0A` +
+            `Desain CV: ${desain}%0A%0A` +
+            `Saya akan segera kirimkan bukti pembayaran dan dokumen pendukung. Terima kasih!`
+        );
+
+        const nomorTujuan = '6285724559033';
+
+        setTimeout(() => {
+            window.location.href = `https://wa.me/${nomorTujuan}?text=${pesanWA}`;
+        }, 2000);
+
+        setTimeout(() => {
+            document.getElementById('cvForm').reset();
+            currentPage = 1;
+            updatePage();
+            updateProgress();
+            getProductFromURL();
+            document.getElementById('packageInfo').style.display = 'none';
+            document.querySelectorAll('.radio-option').forEach(option => {
+                option.classList.remove('selected');
             });
-        });
+        }, 2000);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Terjadi kesalahan saat mengirim form. Silakan coba lagi.', 'error');
+    })
+    .finally(() => {
+        btnText.style.display = 'inline';
+        btnLoading.style.display = 'none';
+        submitBtn.disabled = false;
+    });
+});
     </script>
 </body>
 </html>
