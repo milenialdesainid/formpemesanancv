@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Pemesanan CV</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
         * {
             margin: 0;
@@ -14,70 +14,76 @@
         }
 
         :root {
-            /* Dark Theme Colors */
-            --bg-primary: #0a0a0b;
-            --bg-secondary: #111113;
-            --bg-tertiary: #1a1a1d;
-            --surface: #202024;
-            --surface-hover: #2a2a2f;
+            /* Dark Modern Colors */
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --surface: #30363d;
+            --surface-hover: #373e47;
+            --surface-elevated: #3c434b;
             
-            /* Accent Colors */
-            --accent-primary: #6366f1;
-            --accent-secondary: #8b5cf6;
+            /* Subtle Accent Colors */
+            --accent-primary: #4f46e5;
+            --accent-secondary: #7c3aed;
             --accent-success: #10b981;
             --accent-warning: #f59e0b;
             --accent-danger: #ef4444;
+            --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             
             /* Text Colors */
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
-            --text-disabled: #52525b;
+            --text-primary: #e6edf3;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --text-disabled: #4b5563;
             
             /* Border Colors */
-            --border-primary: #27272a;
-            --border-secondary: #3f3f46;
-            --border-accent: #6366f1;
+            --border-primary: #30363d;
+            --border-secondary: #404854;
+            --border-accent: #4f46e5;
             
-            /* Typography Scale */
-            --font-xs: 0.75rem;    /* 12px */
-            --font-sm: 0.875rem;   /* 14px */
-            --font-base: 1rem;     /* 16px */
-            --font-lg: 1.125rem;   /* 18px */
-            --font-xl: 1.25rem;    /* 20px */
-            --font-2xl: 1.5rem;    /* 24px */
-            --font-3xl: 1.875rem;  /* 30px */
-            --font-4xl: 2.25rem;   /* 36px */
+            /* Typography Scale - More elegant sizing */
+            --font-xs: 0.75rem;    
+            --font-sm: 0.875rem;   
+            --font-base: 0.9rem;     
+            --font-lg: 1rem;   
+            --font-xl: 1.125rem;    
+            --font-2xl: 1.25rem;    
+            --font-3xl: 1.5rem;  
+            --font-4xl: 1.875rem;   
+            --font-5xl: 2.25rem;
             
             /* Spacing Scale */
-            --space-1: 0.25rem;   /* 4px */
-            --space-2: 0.5rem;    /* 8px */
-            --space-3: 0.75rem;   /* 12px */
-            --space-4: 1rem;      /* 16px */
-            --space-5: 1.25rem;   /* 20px */
-            --space-6: 1.5rem;    /* 24px */
-            --space-8: 2rem;      /* 32px */
-            --space-10: 2rem;     /* 32px */
-            --space-12: 2.5rem;   /* 40px */
-            --space-16: 3rem;     /* 48px */
+            --space-1: 0.25rem;   
+            --space-2: 0.5rem;    
+            --space-3: 0.75rem;   
+            --space-4: 1rem;      
+            --space-5: 1.25rem;   
+            --space-6: 1.5rem;    
+            --space-8: 2rem;      
+            --space-10: 2.5rem;     
+            --space-12: 3rem;   
+            --space-16: 4rem;     
             
-            /* Shadows */
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            /* Subtle Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.35), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            --shadow-glow: 0 0 15px rgba(79, 70, 229, 0.2);
             
             /* Radius */
-            --radius-sm: 0.375rem;  /* 6px */
-            --radius-md: 0.5rem;    /* 8px */
-            --radius-lg: 0.75rem;   /* 12px */
-            --radius-xl: 1rem;      /* 16px */
-            --radius-2xl: 1.5rem;   /* 24px */
+            --radius-sm: 0.375rem;  
+            --radius-md: 0.5rem;    
+            --radius-lg: 0.75rem;   
+            --radius-xl: 1rem;      
+            --radius-2xl: 1.25rem;   
+            --radius-3xl: 1.5rem;
             
             /* Transitions */
             --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
             --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
             --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         body {
@@ -85,31 +91,62 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.5;
             font-size: var(--font-base);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(79, 70, 229, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
         }
 
         /* Container */
         .form-container {
-            max-width: 56rem; /* 896px */
+            max-width: 56rem;
             margin: 0 auto;
-            padding: var(--space-6) var(--space-4);
+            padding: var(--space-8) var(--space-6);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .form-wrapper {
-            background: var(--bg-secondary);
-            border-radius: var(--radius-2xl);
+            background: rgba(22, 27, 34, 0.7);
+            border-radius: var(--radius-3xl);
             border: 1px solid var(--border-primary);
             overflow: hidden;
             position: relative;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .form-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.3), transparent);
         }
 
         /* Progress Section */
         .progress-section {
             padding: var(--space-10) var(--space-8) var(--space-8);
             border-bottom: 1px solid var(--border-primary);
+            background: linear-gradient(135deg, rgba(33, 38, 45, 0.8) 0%, rgba(22, 27, 34, 0.8) 100%);
         }
 
         .progress-bar {
@@ -118,6 +155,9 @@
             align-items: center;
             position: relative;
             margin-bottom: var(--space-8);
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .progress-line {
@@ -129,19 +169,37 @@
             background: var(--border-secondary);
             border-radius: 1px;
             z-index: 1;
+            overflow: hidden;
         }
 
         .progress-line-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            background: var(--accent-gradient);
             border-radius: 1px;
             transition: width var(--transition-slow);
             width: 33.33%;
+            position: relative;
+        }
+
+        .progress-line-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .step {
-            width: 3rem;
-            height: 3rem;
+            width: 2.5rem;
+            height: 2.5rem;
             border-radius: 50%;
             background: var(--surface);
             border: 2px solid var(--border-secondary);
@@ -154,19 +212,26 @@
             position: relative;
             z-index: 2;
             transition: all var(--transition-normal);
+            cursor: pointer;
+        }
+
+        .step:hover {
+            transform: scale(1.02);
         }
 
         .step.active {
-            background: var(--accent-primary);
+            background: var(--accent-gradient);
             border-color: var(--accent-primary);
             color: white;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15), var(--shadow-glow);
+            transform: scale(1.05);
         }
 
         .step.completed {
             background: var(--accent-success);
             border-color: var(--accent-success);
             color: white;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
         }
 
         .step.completed::after {
@@ -184,7 +249,7 @@
             font-weight: 500;
             color: var(--text-muted);
             white-space: nowrap;
-            transition: color var(--transition-normal);
+            transition: all var(--transition-normal);
         }
 
         .step.active .step-label {
@@ -199,20 +264,41 @@
 
         .page {
             display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all var(--transition-slow);
         }
 
         .page.active {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: pageSlideIn 0.4s ease-out;
         }
 
-        /* Typography */
+        @keyframes pageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Typography - More elegant */
         .page-title {
             font-size: var(--font-3xl);
-            font-weight: 800;
+            font-weight: 700;
             text-align: center;
             margin-bottom: var(--space-4);
             line-height: 1.2;
             letter-spacing: -0.025em;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .page-subtitle {
@@ -224,16 +310,21 @@
             max-width: 32rem;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.6;
         }
 
-        /* Product Display */
+        /* Product Display - More refined */
         .product-display {
-            background: var(--surface);
-            padding: var(--space-5);
-            border-radius: var(--radius-xl);
+            background: rgba(48, 54, 61, 0.6);
+            padding: var(--space-6);
+            border-radius: var(--radius-2xl);
             border: 1px solid var(--border-primary);
             margin-bottom: var(--space-6);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-normal);
+            backdrop-filter: blur(10px);
         }
 
         .product-display h3 {
@@ -241,28 +332,59 @@
             margin-bottom: var(--space-3);
             font-size: var(--font-base);
             font-weight: 500;
+            position: relative;
         }
 
         .product-preview {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: var(--accent-gradient);
             color: white;
-            padding: var(--space-4);
+            padding: var(--space-5);
             text-align: center;
             border-radius: var(--radius-lg);
             font-weight: 600;
             font-size: var(--font-lg);
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-normal);
+        }
+
+        .product-preview::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: transform var(--transition-slow);
+        }
+
+        .product-preview:hover::before {
+            animation: shine 1s ease-in-out;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
 
         /* Form Groups */
         .form-group {
             margin-bottom: var(--space-6);
+            animation: fadeInUp 0.5s ease-out backwards;
         }
+
+        .form-group:nth-child(2) { animation-delay: 0.05s; }
+        .form-group:nth-child(3) { animation-delay: 0.1s; }
+        .form-group:nth-child(4) { animation-delay: 0.15s; }
+        .form-group:nth-child(5) { animation-delay: 0.2s; }
 
         .form-group label {
             display: block;
             margin-bottom: var(--space-2);
-            font-weight: 600;
+            font-weight: 500;
             color: var(--text-primary);
             font-size: var(--font-sm);
         }
@@ -277,9 +399,10 @@
             font-size: var(--font-base);
             font-family: inherit;
             font-weight: 400;
-            background: var(--surface);
+            background: rgba(48, 54, 61, 0.5);
             color: var(--text-primary);
             transition: all var(--transition-normal);
+            backdrop-filter: blur(5px);
         }
 
         .form-group input:focus,
@@ -287,17 +410,20 @@
         .form-group textarea:focus {
             outline: none;
             border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12), var(--shadow-sm);
+            background: rgba(48, 54, 61, 0.7);
         }
 
         .form-group input::placeholder,
         .form-group textarea::placeholder {
             color: var(--text-muted);
+            font-weight: 400;
         }
 
         .form-group textarea {
             resize: vertical;
-            min-height: 7rem;
+            min-height: 6rem;
+            line-height: 1.5;
         }
 
         .required {
@@ -305,39 +431,62 @@
             font-weight: 600;
         }
 
-        /* Two Column Layout - Only for specific fields */
+        /* Two Column Layout */
         .birth-location-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--space-4);
+            gap: var(--space-5);
         }
 
-        /* Radio Groups */
+        /* Radio Groups - More elegant */
         .radio-group {
             display: grid;
-            gap: var(--space-3);
+            gap: var(--space-4);
             margin-top: var(--space-4);
         }
 
         .radio-option {
             display: flex;
             align-items: flex-start;
-            padding: var(--space-4);
+            padding: var(--space-5);
             border: 1px solid var(--border-primary);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-xl);
             cursor: pointer;
             transition: all var(--transition-normal);
-            background: var(--surface);
+            background: rgba(48, 54, 61, 0.4);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .radio-option::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
         }
 
         .radio-option:hover {
             border-color: var(--accent-primary);
-            background: var(--surface-hover);
+            background: rgba(48, 54, 61, 0.6);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .radio-option:hover::before {
+            opacity: 0.03;
         }
 
         .radio-option.selected {
             border-color: var(--accent-primary);
-            background: var(--surface-hover);
+            background: rgba(48, 54, 61, 0.7);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12), var(--shadow-md);
+        }
+
+        .radio-option.selected::before {
+            opacity: 0.06;
         }
 
         .radio-option input[type="radio"] {
@@ -353,6 +502,7 @@
             cursor: pointer;
             flex: 1;
             font-weight: 500;
+            position: relative;
         }
 
         .radio-option .package-price {
@@ -363,23 +513,48 @@
 
         /* Package Info */
         .package-info {
-            margin-top: var(--space-4);
-            padding: var(--space-5);
-            background: var(--bg-tertiary);
+            margin-top: var(--space-5);
+            padding: var(--space-6);
+            background: rgba(33, 38, 45, 0.6);
             border-radius: var(--radius-xl);
             border: 1px solid var(--border-secondary);
             display: none;
+            position: relative;
+            overflow: hidden;
+            animation: slideDown 0.3s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .package-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.3), transparent);
         }
 
         .package-info h4 {
             color: var(--accent-success);
-            margin-bottom: var(--space-4);
+            margin-bottom: var(--space-5);
             font-size: var(--font-lg);
             font-weight: 700;
         }
 
         .package-section {
-            margin-bottom: var(--space-4);
+            margin-bottom: var(--space-5);
         }
 
         .package-section h5 {
@@ -395,6 +570,7 @@
         .check-icon {
             color: var(--accent-success);
             font-weight: 700;
+            font-size: var(--font-base);
         }
 
         .sub-items {
@@ -409,13 +585,15 @@
             font-weight: 400;
             font-size: var(--font-sm);
             position: relative;
+            padding-left: var(--space-3);
         }
 
         .sub-items li:before {
             content: "•";
             position: absolute;
-            left: -1rem;
-            color: var(--text-muted);
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: 600;
         }
 
         .estimation {
@@ -429,23 +607,30 @@
             margin-top: var(--space-3);
         }
 
-        /* Language Table */
+        /* Language Section */
         .language-section {
-            margin-top: var(--space-4);
+            margin-top: var(--space-5);
         }
 
         .main-languages {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--space-4);
-            margin-bottom: var(--space-4);
+            gap: var(--space-5);
+            margin-bottom: var(--space-5);
         }
 
         .language-option {
-            background: var(--surface);
+            background: rgba(48, 54, 61, 0.4);
             border: 1px solid var(--border-primary);
-            border-radius: var(--radius-lg);
-            padding: var(--space-4);
+            border-radius: var(--radius-xl);
+            padding: var(--space-5);
+            transition: all var(--transition-normal);
+            backdrop-filter: blur(5px);
+        }
+
+        .language-option:hover {
+            border-color: var(--accent-primary);
+            background: rgba(48, 54, 61, 0.6);
         }
 
         .language-option h4 {
@@ -458,6 +643,7 @@
         .language-levels {
             display: flex;
             gap: var(--space-3);
+            flex-wrap: wrap;
         }
 
         .language-levels label {
@@ -467,6 +653,12 @@
             font-size: var(--font-sm);
             font-weight: 400;
             cursor: pointer;
+            color: var(--text-secondary);
+            transition: color var(--transition-normal);
+        }
+
+        .language-levels label:hover {
+            color: var(--text-primary);
         }
 
         .language-levels input[type="radio"] {
@@ -476,15 +668,22 @@
         }
 
         .additional-language {
-            background: var(--surface);
+            background: rgba(48, 54, 61, 0.4);
             border: 1px solid var(--border-primary);
-            border-radius: var(--radius-lg);
-            padding: var(--space-4);
+            border-radius: var(--radius-xl);
+            padding: var(--space-5);
+            transition: all var(--transition-normal);
+            backdrop-filter: blur(5px);
+        }
+
+        .additional-language:hover {
+            border-color: var(--accent-primary);
+            background: rgba(48, 54, 61, 0.6);
         }
 
         .additional-language label {
             font-size: var(--font-sm);
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: var(--space-2);
         }
 
@@ -495,54 +694,76 @@
 
         /* Field Descriptions */
         .field-description {
-            background: var(--bg-tertiary);
-            padding: var(--space-4);
-            border-radius: var(--radius-lg);
+            background: rgba(33, 38, 45, 0.6);
+            padding: var(--space-5);
+            border-radius: var(--radius-xl);
             margin-bottom: var(--space-3);
             border-left: 3px solid var(--accent-primary);
             font-size: var(--font-sm);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
         }
 
         .field-description .desc-title {
             color: var(--text-primary);
             font-weight: 600;
             margin-bottom: var(--space-2);
-            font-size: var(--font-sm);
+            font-size: var(--font-base);
         }
 
         .field-description .desc-content {
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.6;
             margin-bottom: var(--space-2);
+            font-weight: 400;
         }
 
         .field-description .desc-example {
             color: var(--text-muted);
             font-style: italic;
             font-size: var(--font-xs);
-            line-height: 1.4;
+            line-height: 1.5;
+            background: rgba(79, 70, 229, 0.05);
+            padding: var(--space-3);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(79, 70, 229, 0.1);
         }
 
         /* Next Steps Section */
         .next-steps {
-            background: var(--bg-tertiary);
+            background: rgba(33, 38, 45, 0.6);
             padding: var(--space-6);
-            border-radius: var(--radius-xl);
+            border-radius: var(--radius-2xl);
             border: 1px solid var(--border-secondary);
             margin-bottom: var(--space-6);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .next-steps::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-gradient);
         }
 
         .next-steps h3 {
             color: var(--accent-success);
             font-size: var(--font-xl);
             font-weight: 700;
-            margin-bottom: var(--space-4);
+            margin-bottom: var(--space-5);
             text-align: center;
         }
 
         .next-steps-content {
             line-height: 1.6;
             color: var(--text-secondary);
+            font-size: var(--font-sm);
         }
 
         .next-steps-content strong {
@@ -558,14 +779,15 @@
         .next-steps-content li {
             margin-bottom: var(--space-1);
             position: relative;
+            padding-left: var(--space-3);
         }
 
         .next-steps-content li:before {
             content: "•";
             position: absolute;
-            left: -1rem;
+            left: 0;
             color: var(--accent-success);
-            font-weight: bold;
+            font-weight: 700;
         }
 
         /* Buttons */
@@ -590,30 +812,51 @@
             align-items: center;
             justify-content: center;
             gap: var(--space-2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform var(--transition-normal);
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
         }
 
         .btn-primary {
-            background: var(--accent-primary);
+            background: var(--accent-gradient);
             color: white;
             box-shadow: var(--shadow-md);
         }
 
         .btn-primary:hover {
-            background: #5855eb;
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
         .btn-secondary {
-            background: var(--surface);
+            background: rgba(48, 54, 61, 0.6);
             color: var(--text-secondary);
             border: 1px solid var(--border-primary);
+            backdrop-filter: blur(5px);
         }
 
         .btn-secondary:hover {
-            background: var(--surface-hover);
+            background: rgba(48, 54, 61, 0.8);
             color: var(--text-primary);
             border-color: var(--border-secondary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
         }
 
         /* Submit Button */
@@ -626,7 +869,7 @@
             font-weight: 700;
             font-family: inherit;
             cursor: pointer;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: var(--accent-gradient);
             color: white;
             box-shadow: var(--shadow-lg);
             transition: all var(--transition-normal);
@@ -635,11 +878,26 @@
             align-items: center;
             justify-content: center;
             gap: var(--space-2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform var(--transition-normal);
         }
 
         .submit-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl), var(--shadow-glow);
+        }
+
+        .submit-btn:hover:not(:disabled)::before {
+            transform: translateX(100%);
         }
 
         .submit-btn:disabled {
@@ -666,45 +924,47 @@
         /* Notification Styles */
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 16px 24px;
-            border-radius: 12px;
+            top: 1.5rem;
+            right: 1.5rem;
+            padding: var(--space-4) var(--space-5);
+            border-radius: var(--radius-lg);
             color: white;
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 500;
+            font-size: var(--font-sm);
             z-index: 9999;
             transform: translateX(400px);
-            transition: transform 0.3s ease;
-            max-width: 400px;
+            transition: transform var(--transition-bounce);
+            max-width: 350px;
             box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .notification.success {
-            background: var(--accent-success);
+            background: linear-gradient(135deg, var(--accent-success), #059669);
         }
 
         .notification.error {
-            background: var(--accent-danger);
+            background: linear-gradient(135deg, var(--accent-danger), #dc2626);
         }
 
         .notification.info {
-            background: var(--accent-primary);
+            background: var(--accent-gradient);
         }
 
         .notification.show {
             transform: translateX(0);
         }
 
-        /* Mobile Responsive */
+        /* Enhanced Mobile Responsive */
         @media (max-width: 768px) {
             .form-container {
-                padding: var(--space-4) var(--space-3);
+                padding: var(--space-6) var(--space-4);
             }
             
             .progress-section,
             .form-content {
-                padding: var(--space-6);
+                padding: var(--space-6) var(--space-5);
             }
             
             .page-title {
@@ -717,33 +977,34 @@
             }
             
             .step {
-                width: 2.5rem;
-                height: 2.5rem;
+                width: 2.25rem;
+                height: 2.25rem;
+                font-size: var(--font-xs);
             }
             
             .button-group {
                 flex-direction: column;
+                gap: var(--space-3);
             }
             
             .btn {
                 width: 100%;
+                padding: var(--space-4) var(--space-5);
             }
 
-            .birth-location-row {
-                grid-template-columns: 1fr;
-            }
-
+            .birth-location-row,
             .main-languages {
                 grid-template-columns: 1fr;
+                gap: var(--space-3);
             }
 
             .language-levels {
-                flex-wrap: wrap;
+                justify-content: center;
             }
 
             .notification {
-                right: 10px;
-                left: 10px;
+                right: 1rem;
+                left: 1rem;
                 max-width: none;
                 transform: translateY(-100px);
             }
@@ -751,15 +1012,165 @@
             .notification.show {
                 transform: translateY(0);
             }
+
+            .radio-option {
+                padding: var(--space-4);
+            }
+
+            .package-info,
+            .field-description,
+            .next-steps {
+                padding: var(--space-5);
+            }
+
+            .progress-bar {
+                max-width: 280px;
+            }
         }
 
         @media (max-width: 480px) {
             .step-label {
-                font-size: 10px;
+                font-size: 0.7rem;
             }
             
             .page-title {
                 font-size: var(--font-xl);
+            }
+
+            .form-container {
+                padding: var(--space-4) var(--space-3);
+            }
+
+            .progress-section,
+            .form-content {
+                padding: var(--space-5) var(--space-4);
+            }
+
+            .step {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .progress-bar {
+                max-width: 240px;
+            }
+        }
+
+        /* Accessibility Enhancements */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus Styles for Better Accessibility */
+        .btn:focus,
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        /* Smooth scrolling for better UX */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-secondary);
+            border-radius: var(--radius-lg);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* Enhanced radio button styling */
+        input[type="radio"] {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid var(--border-secondary);
+            border-radius: 50%;
+            background: rgba(48, 54, 61, 0.5);
+            position: relative;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        input[type="radio"]:checked {
+            border-color: var(--accent-primary);
+            background: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        input[type="radio"]:hover {
+            border-color: var(--accent-primary);
+            transform: scale(1.05);
+        }
+
+        /* Error state styling */
+        .form-group input.error,
+        .form-group textarea.error,
+        .form-group select.error {
+            border-color: var(--accent-danger);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+            background: rgba(239, 68, 68, 0.03);
+        }
+
+        /* Success state styling */
+        .form-group input.success,
+        .form-group textarea.success,
+        .form-group select.success {
+            border-color: var(--accent-success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+        }
+
+        /* Enhanced package selection animation */
+        .radio-option.selected {
+            animation: selectedPulse 0.4s ease-out;
+        }
+
+        @keyframes selectedPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.01); }
+            100% { transform: scale(1); }
+        }
+
+        /* Progressive enhancement for better performance */
+        @supports (backdrop-filter: blur(10px)) {
+            .form-wrapper {
+                backdrop-filter: blur(20px);
+            }
+            
+            .notification {
+                backdrop-filter: blur(15px);
             }
         }
     </style>
@@ -813,9 +1224,8 @@
                                     <label for="basic">
                                         <div>
                                             <strong>Paket Basic</strong>
-                                            <span class="package-price"> – Rp.50.000</span>
                                         </div>
-                                        <div style="color: var(--text-muted); font-size: var(--font-sm); margin-top: 4px;">
+                                        <div style="color: var(--text-muted); font-size: var(--font-xs); margin-top: 2px;">
                                             CV + Surat Lamaran + Berkas Pendukung
                                         </div>
                                     </label>
@@ -825,9 +1235,8 @@
                                     <label for="premium">
                                         <div>
                                             <strong>Paket Premium</strong>
-                                            <span class="package-price"> – Rp.120.000</span>
                                         </div>
-                                        <div style="color: var(--text-muted); font-size: var(--font-sm); margin-top: 4px;">
+                                        <div style="color: var(--text-muted); font-size: var(--font-xs); margin-top: 2px;">
                                             Semua fitur Basic + Extra benefits
                                         </div>
                                     </label>
@@ -843,7 +1252,7 @@
                         <div class="button-group">
                             <button type="button" class="btn btn-primary" onclick="nextPage()">
                                 Lanjutkan
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="9,18 15,12 9,6"></polyline>
                                 </svg>
                             </button>
@@ -969,9 +1378,9 @@
                         <!-- Pengalaman Kerja -->
                         <div class="form-group">
                             <div class="field-description">
-                                <div class="desc-title">Format Penulisan Wajib Seperti ini:</div>
+                                <div class="desc-title">Format Penulisan Pengalaman Kerja:</div>
                                 <div class="desc-example">
-                                    <strong>Contoh:</strong><br><br>
+                                    <strong>Contoh:</strong><br>
                                     Perusahaan : PT. Indonesia Maju<br>
                                     Jabatan : Manager Marketing<br>
                                     Lama : 2018 - 2022<br>
@@ -985,9 +1394,9 @@
                         <!-- Riwayat Pendidikan -->
                         <div class="form-group">
                             <div class="field-description">
-                                <div class="desc-title">Format Penulisan Wajib Seperti ini:</div>
+                                <div class="desc-title">Format Penulisan Riwayat Pendidikan:</div>
                                 <div class="desc-example">
-                                    <strong>Contoh:</strong><br><br>
+                                    <strong>Contoh:</strong><br>
                                     Nama Sekolah / Universitas : Universitas Indonesia<br>
                                     Jurusan : Sistem Informasi<br>
                                     Tahun Lulus : 2020<br>
@@ -1001,9 +1410,9 @@
                         <!-- Hard Skill -->
                         <div class="form-group">
                             <div class="field-description">
-                                <div class="desc-title">Pengertian:</div>
+                                <div class="desc-title">Format Penulisan Hard Skill</div>
                                 <div class="desc-content">
-                                    Kemampuan teknis yang dapat dipelajari dan biasanya diajarkan di sekolah, pelatihan atau tempat kerja
+                                    Pengertian : Kemampuan teknis yang dapat dipelajari dan biasanya diajarkan di sekolah, pelatihan atau tempat kerja
                                 </div>
                                 <div class="desc-example">
                                     <strong>Contohnya:</strong><br>
@@ -1021,9 +1430,9 @@
                         <!-- Soft Skill -->
                         <div class="form-group">
                             <div class="field-description">
-                                <div class="desc-title">Pengertian:</div>
+                                <div class="desc-title">Format Penulisan Doft Skill</div>
                                 <div class="desc-content">
-                                    Kemampuan non-teknis yang berkaitan dengan kepribadian, sikap, dan cara berinteraksi
+                                    Pengertian : Kemampuan non-teknis yang berkaitan dengan kepribadian, sikap, dan cara berinteraksi
                                 </div>
                                 <div class="desc-example">
                                     <strong>Contohnya:</strong><br>
@@ -1040,14 +1449,14 @@
 
                         <div class="button-group">
                             <button type="button" class="btn btn-secondary" onclick="prevPage()">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="15,18 9,12 15,6"></polyline>
                                 </svg>
                                 Kembali
                             </button>
                             <button type="button" class="btn btn-primary" onclick="nextPage()">
                                 Lanjutkan
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="9,18 15,12 9,6"></polyline>
                                 </svg>
                             </button>
@@ -1083,7 +1492,7 @@
 
                         <div class="button-group">
                             <button type="button" class="btn btn-secondary" onclick="prevPage()">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="15,18 9,12 15,6"></polyline>
                                 </svg>
                                 Kembali
@@ -1128,7 +1537,7 @@
         // Package information
         const packages = {
             basic: {
-                title: 'Paket Basic – Rp.50.000',
+                title: 'Paket Basic : Rp.50.000',
                 sections: [
                     {
                         title: '1 file PDF berisi:',
@@ -1138,7 +1547,7 @@
                 estimation: '⏱️ Estimasi pengerjaan: 1–2 hari kerja'
             },
             premium: {
-                title: 'Paket Premium – Rp.120.000',
+                title: 'Paket Premium : Rp.120.000',
                 sections: [
                     {
                         title: '1 file PDF berisi:',
@@ -1223,7 +1632,7 @@
                 
                 if (preview && hiddenField) {
                     preview.textContent = productName;
-                    preview.style.background = 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))';
+                    preview.style.background = 'var(--accent-gradient)';
                     preview.style.color = 'white';
                     hiddenField.value = productName;
                 }
@@ -1238,7 +1647,7 @@
                 const preview = document.getElementById('selectedProductPreview');
                 if (preview) {
                     preview.textContent = 'Tidak ada produk dipilih - Silakan kembali ke website untuk memilih produk';
-                    preview.style.background = 'var(--surface-hover)';
+                    preview.style.background = 'rgba(75, 85, 99, 0.5)';
                     preview.style.color = 'var(--text-muted)';
                 }
             } catch (error) {
@@ -1303,7 +1712,7 @@
                     if (pkg.additionalEstimation) {
                         html += `<div class="estimation" style="margin-top: var(--space-3);">${pkg.additionalEstimation}</div>`;
                     } else if (pkg.estimation) {
-                        html += `<div class="estimation" style="margin-top: var(--space-3).">${pkg.estimation}</div>`;
+                        html += `<div class="estimation" style="margin-top: var(--space-3);">${pkg.estimation}</div>`;
                     }
                     
                     packageDetails.innerHTML = html;
@@ -1343,12 +1752,11 @@
                     return false;
                 }
                 
-                field.classList.remove('error');
+                field.classList.remove('error', 'success');
                 field.style.borderColor = '';
                 
                 if (field.hasAttribute('required') && (!field.value || !field.value.trim())) {
                     field.classList.add('error');
-                    field.style.borderColor = 'var(--accent-danger)';
                     return false;
                 }
                 
@@ -1356,7 +1764,6 @@
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if (!emailRegex.test(field.value)) {
                         field.classList.add('error');
-                        field.style.borderColor = 'var(--accent-danger)';
                         return false;
                     }
                 }
@@ -1365,9 +1772,12 @@
                     const phoneRegex = /^[\d\s\-\+\(\)]+$/;
                     if (!phoneRegex.test(field.value)) {
                         field.classList.add('error');
-                        field.style.borderColor = 'var(--accent-danger)';
                         return false;
                     }
+                }
+                
+                if (field.value && field.value.trim()) {
+                    field.classList.add('success');
                 }
                 
                 return true;
@@ -1836,7 +2246,7 @@
                 // Clear any error states
                 document.querySelectorAll('.form-group input, .form-group textarea, .form-group select').forEach(field => {
                     if (field && field.classList && field.style) {
-                        field.classList.remove('error');
+                        field.classList.remove('error', 'success');
                         field.style.borderColor = '';
                     }
                 });
@@ -1891,38 +2301,6 @@
                             this.style.transform = '';
                         }
                     });
-                }
-            });
-        });
-
-        // Performance optimization: Lazy load package info
-        const packageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Preload package information when user scrolls near
-                    const packageRadios = document.querySelectorAll('input[name="paket"]');
-                    packageRadios.forEach(radio => {
-                        if (radio.checked) {
-                            const packageType = radio.value.toLowerCase().includes('basic') ? 'basic' : 'premium';
-                            showPackageInfo(packageType);
-                        }
-                    });
-                    packageObserver.disconnect();
-                }
-            });
-        });
-
-        const packageSection = document.querySelector('.radio-group');
-        if (packageSection) {
-            packageObserver.observe(packageSection);
-        }
-
-        // Add accessibility improvements
-        document.addEventListener('DOMContentLoaded', function() {
-            const requiredFields = document.querySelectorAll('input[required], textarea[required], select[required]');
-            requiredFields.forEach(field => {
-                if (field && field.setAttribute) {
-                    field.setAttribute('aria-required', 'true');
                 }
             });
         });
