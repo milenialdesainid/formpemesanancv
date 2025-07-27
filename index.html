@@ -462,10 +462,11 @@
             font-size: var(--font-base);
             pointer-events: none;
             z-index: 1;
+            font-weight: 400;
         }
 
         .linkedin-input-with-prefix {
-            padding-left: 170px !important;
+            padding-left: 180px !important;
         }
 
         .form-group textarea {
@@ -1282,12 +1283,14 @@
                 min-height: 5rem;
             }
 
-            .linkedin-input-with-prefix {
-                padding-left: 140px !important;
-            }
-
+            /* Fixed LinkedIn input for mobile */
             .linkedin-prefix {
-                font-size: var(--font-xs);
+                font-size: var(--font-sm);
+                left: var(--space-4);
+            }
+            
+            .linkedin-input-with-prefix {
+                padding-left: 175px !important;
             }
         }
 
@@ -1337,8 +1340,14 @@
                 padding: var(--space-3);
             }
 
+            /* More compact LinkedIn input for very small screens */
+            .linkedin-prefix {
+                font-size: var(--font-xs);
+                left: var(--space-3);
+            }
+            
             .linkedin-input-with-prefix {
-                padding-left: 120px !important;
+                padding-left: 130px !important;
             }
         }
 
@@ -1349,6 +1358,11 @@
             .form-group textarea {
                 font-size: 16px !important;
                 transform: translateZ(0);
+            }
+            
+            /* Ensure LinkedIn prefix stays properly sized on iOS */
+            .linkedin-prefix {
+                font-size: 16px !important;
             }
         }
 
@@ -1862,46 +1876,54 @@
 
         // Modal functions
         function openImageModal(imgElement) {
-            if (imgElement.tagName === 'IMG' || (imgElement.querySelector && imgElement.querySelector('img'))) {
-                const modal = document.getElementById('imageModal');
-                const modalImg = document.getElementById('modalImage');
-                
-                let imgSrc, imgAlt;
-                
-                if (imgElement.tagName === 'IMG') {
-                    imgSrc = imgElement.src;
-                    imgAlt = imgElement.alt;
-                } else {
-                    const img = imgElement.querySelector('img');
-                    if (img) {
-                        imgSrc = img.src;
-                        imgAlt = img.alt;
-                    }  
-                }
-                
-                if (imgSrc) {
-                    modal.classList.add('show');
-                    modalImg.src = imgSrc;
-                    modalImg.alt = imgAlt;
-                    document.body.style.overflow = 'hidden';
+            try {
+                if (imgElement.tagName === 'IMG' || (imgElement.querySelector && imgElement.querySelector('img'))) {
+                    const modal = document.getElementById('imageModal');
+                    const modalImg = document.getElementById('modalImage');
                     
-                    requestAnimationFrame(() => {
-                        modal.style.opacity = '1';
-                    });
+                    let imgSrc, imgAlt;
+                    
+                    if (imgElement.tagName === 'IMG') {
+                        imgSrc = imgElement.src;
+                        imgAlt = imgElement.alt;
+                    } else {
+                        const img = imgElement.querySelector('img');
+                        if (img) {
+                            imgSrc = img.src;
+                            imgAlt = img.alt;
+                        }  
+                    }
+                    
+                    if (imgSrc) {
+                        modal.classList.add('show');
+                        modalImg.src = imgSrc;
+                        modalImg.alt = imgAlt;
+                        document.body.style.overflow = 'hidden';
+                        
+                        requestAnimationFrame(() => {
+                            modal.style.opacity = '1';
+                        });
+                    }
                 }
+            } catch (error) {
+                console.error('Error opening image modal:', error);
             }
         }
 
         function closeImageModal() {
-            const modal = document.getElementById('imageModal');
-            modal.classList.remove('show');
-            modal.style.opacity = '0';
-            document.body.style.overflow = 'auto';
-            
-            setTimeout(() => {
-                const modalImg = document.getElementById('modalImage');
-                modalImg.src = '';
-            }, 300);
+            try {
+                const modal = document.getElementById('imageModal');
+                modal.classList.remove('show');
+                modal.style.opacity = '0';
+                document.body.style.overflow = 'auto';
+                
+                setTimeout(() => {
+                    const modalImg = document.getElementById('modalImage');
+                    modalImg.src = '';
+                }, 300);
+            } catch (error) {
+                console.error('Error closing image modal:', error);
+            }
         }
 
         // Close modal when clicking outside the image
