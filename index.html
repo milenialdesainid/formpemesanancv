@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Form Pemesanan CV</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -41,7 +41,7 @@
             --border-secondary: #404854;
             --border-accent: #4f46e5;
             
-            /* Typography Scale - More elegant sizing */
+            /* Typography Scale */
             --font-xs: 0.75rem;    
             --font-sm: 0.875rem;   
             --font-base: 0.875rem;     
@@ -287,7 +287,7 @@
             }
         }
 
-        /* Typography - More elegant */
+        /* Typography */
         .page-title {
             font-size: var(--font-3xl);
             font-weight: 700;
@@ -313,7 +313,7 @@
             line-height: 1.6;
         }
 
-        /* Product Display - More refined */
+        /* Product Display - Enhanced with clickable image */
         .product-display {
             background: rgba(48, 54, 61, 0.6);
             padding: var(--space-6);
@@ -371,6 +371,12 @@
             text-align: center;
             font-weight: 600;
             font-size: var(--font-lg);
+            cursor: default;
+        }
+
+        .product-preview.no-product:hover {
+            transform: none;
+            box-shadow: var(--shadow-md);
         }
 
         /* Product Name */
@@ -450,7 +456,7 @@
             gap: var(--space-5);
         }
 
-        /* Radio Groups - More elegant */
+        /* Radio Groups */
         .radio-group {
             display: grid;
             gap: var(--space-4);
@@ -703,7 +709,7 @@
             padding: var(--space-3) var(--space-4);
         }
 
-        /* Field Descriptions - REVISI: Title yang Bold */
+        /* Field Descriptions */
         .field-description {
             background: rgba(33, 38, 45, 0.6);
             padding: var(--space-5);
@@ -718,7 +724,7 @@
 
         .field-description .desc-title {
             color: var(--text-primary);
-            font-weight: 70; /* REVISI: Bold pada title bagian */
+            font-weight: 700;
             margin-bottom: var(--space-2);
             font-size: var(--font-base);
         }
@@ -727,7 +733,7 @@
             color: var(--text-secondary);
             line-height: 1.6;
             margin-bottom: var(--space-2);
-            font-weight: 400; /* REVISI: Tidak bold pada deskripsi */
+            font-weight: 400;
         }
 
         .field-description .desc-example {
@@ -1014,28 +1020,28 @@
             transform: translateX(0);
         }
 
-        /* Enhanced Mobile Responsive - REVISI: Ukuran lebih kecil */
+        /* Enhanced Mobile Responsive */
         @media (max-width: 768px) {
             .form-container {
-                padding: var(--space-4) var(--space-3); /* REVISI: Padding lebih kecil */
+                padding: var(--space-4) var(--space-3);
             }
             
             .progress-section,
             .form-content {
-                padding: var(--space-5) var(--space-4); /* REVISI: Padding lebih kecil */
+                padding: var(--space-5) var(--space-4);
             }
             
             .page-title {
-                font-size: var(--font-xl); /* REVISI: Font lebih kecil */
+                font-size: var(--font-xl);
             }
             
             .page-subtitle {
                 font-size: var(--font-sm);
-                margin-bottom: var(--space-5); /* REVISI: Margin lebih kecil */
+                margin-bottom: var(--space-5);
             }
             
             .step {
-                width: 2rem; /* REVISI: Ukuran step lebih kecil */
+                width: 2rem;
                 height: 2rem;
                 font-size: var(--font-xs);
             }
@@ -1047,7 +1053,7 @@
             
             .btn {
                 width: 100%;
-                padding: var(--space-3) var(--space-4); /* REVISI: Padding lebih kecil */
+                padding: var(--space-3) var(--space-4);
             }
 
             .birth-location-row,
@@ -1072,29 +1078,28 @@
             }
 
             .radio-option {
-                padding: var(--space-3); /* REVISI: Padding lebih kecil */
+                padding: var(--space-3);
             }
 
             .package-info,
             .field-description,
             .next-steps,
             .payment-section {
-                padding: var(--space-4); /* REVISI: Padding lebih kecil */
+                padding: var(--space-4);
             }
 
             .progress-bar {
-                max-width: 240px; /* REVISI: Ukuran lebih kecil */
+                max-width: 240px;
             }
 
             .product-preview {
-                max-width: 120px; /* REVISI: Ukuran lebih kecil */
+                max-width: 120px;
             }
 
             .qris-image {
-                max-width: 180px; /* REVISI: Ukuran lebih kecil */
+                max-width: 180px;
             }
 
-            /* REVISI: Form input lebih kecil di mobile */
             .form-group input,
             .form-group select,
             .form-group textarea {
@@ -1109,40 +1114,39 @@
 
         @media (max-width: 480px) {
             .step-label {
-                font-size: 0.65rem; /* REVISI: Font lebih kecil */
+                font-size: 0.65rem;
             }
             
             .page-title {
-                font-size: var(--font-lg); /* REVISI: Font lebih kecil */
+                font-size: var(--font-lg);
             }
 
             .form-container {
-                padding: var(--space-3) var(--space-2); /* REVISI: Padding lebih kecil */
+                padding: var(--space-3) var(--space-2);
             }
 
             .progress-section,
             .form-content {
-                padding: var(--space-4) var(--space-3); /* REVISI: Padding lebih kecil */
+                padding: var(--space-4) var(--space-3);
             }
 
             .step {
-                width: 1.75rem; /* REVISI: Ukuran step lebih kecil */
+                width: 1.75rem;
                 height: 1.75rem;
             }
 
             .progress-bar {
-                max-width: 200px; /* REVISI: Ukuran lebih kecil */
+                max-width: 200px;
             }
 
             .product-preview {
-                max-width: 100px; /* REVISI: Ukuran lebih kecil */
+                max-width: 100px;
             }
 
             .qris-image {
-                max-width: 150px; /* REVISI: Ukuran lebih kecil */
+                max-width: 150px;
             }
 
-            /* REVISI: Spacing lebih kecil di mobile kecil */
             .form-group {
                 margin-bottom: var(--space-4);
             }
@@ -1152,6 +1156,16 @@
             .next-steps,
             .payment-section {
                 padding: var(--space-3);
+            }
+        }
+
+        /* iOS Safari specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: 16px !important; /* Prevent zoom on iOS */
+                transform: translateZ(0); /* Force hardware acceleration */
             }
         }
 
@@ -1348,6 +1362,42 @@
                 transform: scale(1);
             }
         }
+
+        /* Enhanced hover effects for better UX */
+        .product-preview:not(.no-product)::after {
+            content: '🔍 Klik untuk memperbesar';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: var(--space-2);
+            font-size: var(--font-xs);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        }
+
+        .product-preview:not(.no-product):hover::after {
+            opacity: 1;
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .product-preview::after {
+                opacity: 1;
+            }
+            
+            .btn:hover {
+                transform: none;
+            }
+            
+            .radio-option:hover {
+                transform: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1388,7 +1438,6 @@
                             <div class="product-preview no-product" id="selectedProductPreview" onclick="openImageModal(this)">
                                 Tidak ada produk dipilih - Silakan kembali ke website untuk memilih produk
                             </div>
-                            <!-- REVISI: Tambah nama produk -->
                             <div class="product-name" id="productName" style="display: none;"></div>
                         </div>
 
@@ -1462,7 +1511,7 @@
                         <!-- LinkedIn -->
                         <div class="form-group">
                             <label for="linkedin">LinkedIn / Media Sosial <span class="required">*</span></label>
-                            <input type="text" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/username" required>
+                            <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/username" required>
                         </div>
 
                         <!-- Tempat & Tanggal Lahir -->
@@ -1495,7 +1544,7 @@
                             <div class="language-section">
                                 <div class="main-languages">
                                     <div class="language-option">
-                                        <h4>Bahasa Indonesia</h4>
+                                        <div class="language-title">Bahasa Indonesia</div>
                                         <div class="language-levels">
                                             <label>
                                                 <input type="radio" name="bahasa_indonesia" value="Aktif" required>
@@ -1508,7 +1557,7 @@
                                         </div>
                                     </div>
                                     <div class="language-option">
-                                        <h4>Bahasa Inggris</h4>
+                                        <div class="language-title">Bahasa Inggris</div>
                                         <div class="language-levels">
                                             <label>
                                                 <input type="radio" name="bahasa_inggris" value="Aktif" required>
@@ -1537,14 +1586,14 @@
                         <div class="form-group">
                             <label for="deskripsi_diri">Deskripsi Diri <span class="required">*</span></label>
                             <div class="field-description">
-                                <div class="desc-title">Deskripsi DiriBerikan informasi seperti:</div>
                                 <div class="desc-content">
+                                    Berikan informasi seperti:<br>
+                                </div>
+                                <div class="desc-example">
                                     1. Latar belakang pendidikan<br>
                                     2. Keahlian utama<br>
                                     3. Sifat atau kelebihan dalam bekerja<br>
-                                    4. Tujuan Karir
-                                </div>
-                                <div class="desc-example">
+                                    4. Tujuan Kari<br><br>
                                     <strong>Contoh:</strong><br>
                                     "Lulusan D3 Administrasi Perkantoran dengan pengalaman sebagai staff administrasi selama 1 tahun. Teliti, rapi, dan terbiasa bekerja dengan target. Mampu mengoperasikan Ms. Office dan Google Workspace. Tertarik berkarier di bidang administrasi dan data entry."
                                 </div>
@@ -1556,7 +1605,7 @@
                         <div class="form-group">
                             <label for="pengalaman_kerja">Pengalaman Kerja <span class="required">*</span></label>
                             <div class="field-description">
-                                <div class="desc-title">Format Penulisan Pengalaman Kerja:</div>
+                                <div class="desc-content">Format Penulisan:</div>
                                 <div class="desc-example">
                                     <strong>Contoh:</strong><br>
                                     Perusahaan : PT. Indonesia Maju<br>
@@ -1572,7 +1621,7 @@
                         <div class="form-group">
                             <label for="riwayat_pendidikan">Riwayat Pendidikan <span class="required">*</span></label>
                             <div class="field-description">
-                                <div class="desc-title">Format Penulisan Riwayat Pendidikan:</div>
+                                <div class="desc-content">Format Penulisan:</div>
                                 <div class="desc-example">
                                     <strong>Contoh:</strong><br>
                                     Nama Sekolah / Universitas : Universitas Indonesia<br>
@@ -1588,9 +1637,9 @@
                         <div class="form-group">
                             <label for="hard_skill">Hard Skill <span class="required">*</span></label>
                             <div class="field-description">
-                                <div class="desc-title">Format Penulisan Hard Skill:</div>
                                 <div class="desc-content">
-                                    Pengertian: Kemampuan teknis yang dapat dipelajari dan biasanya diajarkan di sekolah, pelatihan atau tempat kerja
+                                    Pengertian:<br>
+                                    Kemampuan teknis yang dapat dipelajari dan biasanya diajarkan di sekolah, pelatihan atau tempat kerja
                                 </div>
                                 <div class="desc-example">
                                     <strong>Contohnya:</strong><br>
@@ -1608,9 +1657,9 @@
                         <div class="form-group">
                             <label for="soft_skill">Soft Skill <span class="required">*</span></label>
                             <div class="field-description">
-                                <div class="desc-title">Format Penulisan Soft Skill:</div>
                                 <div class="desc-content">
-                                    Pengertian: Kemampuan non-teknis yang berkaitan dengan kepribadian, sikap, dan cara berinteraksi
+                                    Pengertian:<br>
+                                    Kemampuan non-teknis yang berkaitan dengan kepribadian, sikap, dan cara berinteraksi.
                                 </div>
                                 <div class="desc-example">
                                     <strong>Contohnya:</strong><br>
@@ -1642,12 +1691,12 @@
 
                     <!-- PAGE 3: Success & Next Steps -->
                     <div class="page" id="page3">
-                        <h1 class="page-title">Pesanan Berhasil Dikirim!</h1>
-                        <p class="page-subtitle">Terima kasih! Data Anda sudah kami terima dengan baik</p>
+                        <h1 class="page-title">Pastikan data kamu sudah benar!</h1>
 
                         <!-- Payment Section -->
                         <div class="payment-section">
-                            <h3>Pembayaran via QRIS DANA</h3>
+                            <h3>Pembayaran via QRISS DANA</h3>
+                        <p class="page-subtitle">CV kamu akan di proses setelah melakukan pembayaran</p>
                             <img src="https://raw.githubusercontent.com/milenialdesainid/formpemesanancv/main/Desain%20CV/QRIS.jpg" alt="QRIS DANA" class="qris-image" onclick="openImageModal(this)">
                         </div>
 
@@ -1666,9 +1715,9 @@
                                 <ul>
                                     <li>Ijazah / Sertifikat pendidikan</li>
                                     <li>SKCK (jika diperlukan)</li>
-                                    <li>Sertifikat keahlian</li>
                                     <li>Pas foto formal</li>
-                                    <li>Dokumen lain sesuai kebutuhan</li>
+                                    <li>Tanda Tangan (di atas kertas polos</li>
+                                    <li>Dokumen pendukung (max 5)))))</li>
                                 </ul>
                             </div>
                         </div>
@@ -1819,24 +1868,50 @@
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
 
-        // Modal functions - REVISI: Tambah fungsi modal untuk gambar
+        function isIOSDevice() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        }
+
+        // Modal functions - Enhanced for both product and QRIS images
         function openImageModal(imgElement) {
-            if (imgElement.tagName === 'IMG') {
+            if (imgElement.tagName === 'IMG' || (imgElement.querySelector && imgElement.querySelector('img'))) {
                 const modal = document.getElementById('imageModal');
                 const modalImg = document.getElementById('modalImage');
                 
-                modal.classList.add('show');
-                modalImg.src = imgElement.src;
-                modalImg.alt = imgElement.alt;
+                let imgSrc, imgAlt;
                 
-                // Prevent body scroll
-                document.body.style.overflow = 'hidden';
+                if (imgElement.tagName === 'IMG') {
+                    imgSrc = imgElement.src;
+                    imgAlt = imgElement.alt;
+                } else {
+                    // Handle case where div contains image
+                    const img = imgElement.querySelector('img');
+                    if (img) {
+                        imgSrc = img.src;
+                        imgAlt = img.alt;
+                    }
+                }
+                
+                if (imgSrc) {
+                    modal.classList.add('show');
+                    modalImg.src = imgSrc;
+                    modalImg.alt = imgAlt;
+                    
+                    // Prevent body scroll
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Add smooth transition
+                    requestAnimationFrame(() => {
+                        modal.style.opacity = '1';
+                    });
+                }
             }
         }
 
         function closeImageModal() {
             const modal = document.getElementById('imageModal');
             modal.classList.remove('show');
+            modal.style.opacity = '0';
             
             // Restore body scroll
             document.body.style.overflow = 'auto';
@@ -1868,6 +1943,7 @@
                 setupPackageListeners();
                 updateProgress();
                 setupFormValidation();
+                setupIOSFixes();
                 
                 // Add mobile-specific optimizations
                 if (isMobileDevice()) {
@@ -1881,6 +1957,39 @@
                 showNotification('Terjadi kesalahan saat memuat form. Silakan refresh halaman.', 'error');
             }
         });
+
+        // iOS specific fixes to prevent zoom on input focus
+        function setupIOSFixes() {
+            if (isIOSDevice()) {
+                // Add viewport meta tag dynamically for iOS
+                const viewport = document.querySelector('meta[name="viewport"]');
+                if (viewport) {
+                    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                }
+                
+                // Handle input focus to prevent zoom
+                const inputs = document.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        this.style.fontSize = '16px';
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        this.style.fontSize = '';
+                    });
+                });
+                
+                // Prevent zoom on double tap
+                let lastTouchEnd = 0;
+                document.addEventListener('touchend', function(event) {
+                    const now = (new Date()).getTime();
+                    if (now - lastTouchEnd <= 300) {
+                        event.preventDefault();
+                    }
+                    lastTouchEnd = now;
+                }, false);
+            }
+        }
 
         // Get product from URL parameter
         function getProductFromURL() {
@@ -1899,7 +2008,7 @@
             }
         }
 
-        // Update selected product display - REVISI: Tambah nama produk
+        // Update selected product display - Enhanced with click functionality
         function updateSelectedProduct(product) {
             try {
                 const preview = document.getElementById('selectedProductPreview');
@@ -1911,11 +2020,17 @@
                     preview.innerHTML = `<img src="${product.image}" alt="${product.name}" loading="lazy">`;
                     hiddenField.value = product.name;
                     
-                    // REVISI: Tampilkan nama produk
+                    // Show product name
                     if (productName) {
                         productName.textContent = product.name;
                         productName.style.display = 'block';
                     }
+                    
+                    // Make sure click handler works
+                    preview.style.cursor = 'pointer';
+                    preview.onclick = function() {
+                        openImageModal(this);
+                    };
                 }
             } catch (error) {
                 console.error('Error updating selected product:', error);
@@ -1932,6 +2047,8 @@
                 if (preview) {
                     preview.classList.add('no-product');
                     preview.textContent = 'Tidak ada produk dipilih - Silakan kembali ke website untuk memilih produk';
+                    preview.style.cursor = 'default';
+                    preview.onclick = null;
                 }
                 
                 if (productName) {
@@ -2063,6 +2180,14 @@
                     }
                 }
                 
+                if ((field.type === 'url' || field.name === 'linkedin') && field.value) {
+                    const urlRegex = /^https?:\/\/.+/;
+                    if (!urlRegex.test(field.value)) {
+                        field.classList.add('error');
+                        return false;
+                    }
+                }
+                
                 if (field.value && field.value.trim()) {
                     field.classList.add('success');
                 }
@@ -2188,7 +2313,7 @@
             }
         }
 
-        // Improved notification system
+        // Enhanced notification system
         function showNotification(message, type = 'info') {
             try {
                 // Remove existing notifications
@@ -2336,7 +2461,8 @@
 
                 // Create WhatsApp message
                 const pesanWA = encodeURIComponent(
-                    `Halo Kak, saya sudah mengisi form pemesanan CV.\n` +
+                    `Halo Kak,\n` +
+                    `Saya sudah mengisi form pemesanan CV.\n` +
                     `Nama: ${nama}\n` +
                     `Email: ${email}\n` +
                     `Paket: ${paket}\n` +
@@ -2560,13 +2686,15 @@
                 // Move to next field or trigger next page
                 const currentInput = e.target;
                 const form = currentInput.closest('form');
-                const formElements = Array.from(form.querySelectorAll('input, select, textarea, button'));
-                const currentIndex = formElements.indexOf(currentInput);
-                
-                if (currentIndex > -1 && currentIndex < formElements.length - 1) {
-                    const nextElement = formElements[currentIndex + 1];
-                    if (nextElement && nextElement.focus) {
-                        nextElement.focus();
+                if (form) {
+                    const formElements = Array.from(form.querySelectorAll('input, select, textarea, button'));
+                    const currentIndex = formElements.indexOf(currentInput);
+                    
+                    if (currentIndex > -1 && currentIndex < formElements.length - 1) {
+                        const nextElement = formElements[currentIndex + 1];
+                        if (nextElement && nextElement.focus) {
+                            nextElement.focus();
+                        }
                     }
                 }
             }
@@ -2607,6 +2735,208 @@
                 showNotification('Terjadi masalah saat mengirim data. Silakan coba lagi.', 'error');
             }
         });
+
+        // Enhanced touch handling for mobile devices
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndY = e.changedTouches[0].screenY;
+            handleGesture();
+        });
+
+        function handleGesture() {
+            const threshold = 50;
+            const diff = touchStartY - touchEndY;
+            
+            // Swipe up - could be used for future enhancements
+            if (diff > threshold) {
+                // Swipe up detected
+            }
+            
+            // Swipe down - could be used for future enhancements
+            if (diff < -threshold) {
+                // Swipe down detected
+            }
+        }
+
+        // Performance optimization - Lazy load images
+        function lazyLoadImages() {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src || img.src;
+                            img.classList.remove('lazy');
+                            observer.unobserve(img);
+                        }
+                    });
+                });
+
+                images.forEach(img => imageObserver.observe(img));
+            } else {
+                // Fallback for browsers without IntersectionObserver
+                images.forEach(img => {
+                    img.src = img.dataset.src || img.src;
+                });
+            }
+        }
+
+        // Initialize lazy loading after DOM is loaded
+        document.addEventListener('DOMContentLoaded', lazyLoadImages);
+
+        // Enhanced accessibility features
+        function setupAccessibility() {
+            // Add skip link for keyboard users
+            const skipLink = document.createElement('a');
+            skipLink.href = '#main-content';
+            skipLink.textContent = 'Skip to main content';
+            skipLink.className = 'skip-link';
+            skipLink.style.cssText = `
+                position: absolute;
+                top: -40px;
+                left: 6px;
+                background: var(--accent-primary);
+                color: white;
+                padding: 8px;
+                text-decoration: none;
+                border-radius: 4px;
+                z-index: 1000;
+                transition: top 0.3s;
+            `;
+            
+            skipLink.addEventListener('focus', function() {
+                this.style.top = '6px';
+            });
+            
+            skipLink.addEventListener('blur', function() {
+                this.style.top = '-40px';
+            });
+            
+            document.body.insertBefore(skipLink, document.body.firstChild);
+
+            // Add main content ID
+            const formContent = document.querySelector('.form-content');
+            if (formContent) {
+                formContent.id = 'main-content';
+            }
+
+            // Enhance form labels with proper associations
+            const labels = document.querySelectorAll('label');
+            labels.forEach(label => {
+                const input = label.nextElementSibling;
+                if (input && input.tagName && ['INPUT', 'TEXTAREA', 'SELECT'].includes(input.tagName)) {
+                    if (!input.id) {
+                        input.id = 'field_' + Math.random().toString(36).substr(2, 9);
+                    }
+                    label.setAttribute('for', input.id);
+                }
+            });
+
+            // Add ARIA labels to important elements
+            const progressBar = document.querySelector('.progress-bar');
+            if (progressBar) {
+                progressBar.setAttribute('role', 'progressbar');
+                progressBar.setAttribute('aria-label', 'Form progress');
+            }
+
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                step.setAttribute('role', 'button');
+                step.setAttribute('aria-label', `Step ${index + 1}`);
+                step.setAttribute('tabindex', '0');
+            });
+        }
+
+        // Call accessibility setup
+        document.addEventListener('DOMContentLoaded', setupAccessibility);
+
+        // Service Worker registration for offline support (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // You can add a service worker here for offline functionality
+                // navigator.serviceWorker.register('/sw.js');
+            });
+        }
+
+        // Add enhanced animation and interaction effects
+        function setupEnhancedEffects() {
+            // Parallax effect for background elements
+            const formWrapper = document.querySelector('.form-wrapper');
+            
+            if (formWrapper) {
+                window.addEventListener('scroll', function() {
+                    const scrolled = window.pageYOffset;
+                    const rate = scrolled * -0.5;
+                    formWrapper.style.transform = `translateY(${rate}px)`;
+                });
+            }
+
+            // Add hover effects to radio options
+            const radioOptions = document.querySelectorAll('.radio-option');
+            radioOptions.forEach(option => {
+                option.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                option.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Add ripple effect to buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        }
+
+        // Add ripple animation keyframe
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize enhanced effects
+        document.addEventListener('DOMContentLoaded', setupEnhancedEffects);
     </script>
 </body>
 </html>
