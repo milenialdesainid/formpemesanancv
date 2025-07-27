@@ -1687,20 +1687,20 @@
                             <textarea id="soft_skill" name="soft_skill" placeholder="Tuliskan soft skill Anda..." required></textarea>
                         </div>
 
-                        <div class="button-group">
-                            <button type="button" class="btn btn-secondary" onclick="prevPage()">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="15,18 9,12 15,6"></polyline>
-                                </svg>
-                                Kembali
-                            </button>
-                            <button type="button" class="btn btn-primary" onclick="nextPage()">
-                                Lanjutkan
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="9,18 15,12 9,6"></polyline>
-                                </svg>
-                            </button>
-                        </div>
+                        <div class="button-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+    <button type="button" class="btn btn-secondary" onclick="prevPage()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15,18 9,12 15,6"></polyline>
+        </svg>
+        Kembali
+    </button>
+    <button type="button" class="btn btn-primary" onclick="nextPage()">
+        Lanjutkan
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"></polyline>
+        </svg>
+    </button>
+</div>
                     </div>
 
                     <!-- PAGE 3: Success & Next Steps -->
@@ -1736,14 +1736,14 @@
                             </div>
                         </div>
 
-                        <div class="button-group">
+                        <div class="button-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
                             <button type="button" class="btn btn-secondary" onclick="prevPage()">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="15,18 9,12 15,6"></polyline>
                                 </svg>
                                 Kembali
                             </button>
-                            <button type="button" class="btn btn-primary submit-btn" onclick="submitForm()" id="submitBtn">
+                            <button type="button" class="btn btn-primary" onclick="submitForm()" id="submitBtn">
                                 <span id="btnText">Kirim Pesanan</span>
                                 <span id="btnLoading" style="display: none;" class="loading"></span>
                             </button>
@@ -1865,6 +1865,69 @@
             }
         };
 
+        // Enhanced device detection
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+                   window.innerWidth <= 768;
+        }
+
+        function isIOSDevice() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        }
+
+        function isDesktopDevice() {
+            return !isMobileDevice() && window.innerWidth > 768;
+        }
+
+        // Enhanced browser detection
+        function getBrowserInfo() {
+            const ua = navigator.userAgent;
+            let browser = 'unknown';
+            
+            if (ua.indexOf('Chrome') > -1 && ua.indexOf('Edg') === -1) {
+                browser = 'chrome';
+            } else if (ua.indexOf('Firefox') > -1) {
+                browser = 'firefox';
+            } else if (ua.indexOf('Safari') > -1 && ua.indexOf('Chrome') === -1) {
+                browser = 'safari';
+            } else if (ua.indexOf('Edg') > -1) {
+                browser = 'edge';
+            }
+            
+            return {
+                name: browser,
+                userAgent: ua,
+                isPrivate: false // Will be detected later
+            };
+        }
+
+        // Detect private/incognito mode
+        function detectPrivateMode() {
+            return new Promise((resolve) => {
+                try {
+                    if (window.indexedDB) {
+                        const db = indexedDB.open('test');
+                        db.onerror = () => resolve(true);
+                        db.onsuccess = () => resolve(false);
+                    } else if (window.localStorage) {
+                        try {
+                            localStorage.setItem('test', '1');
+                            localStorage.removeItem('test');
+                            resolve(false);
+                        } catch (e) {
+                            resolve(true);
+                        }
+                    } else {
+                        resolve(false);
+                    }
+                } catch (e) {
+                    resolve(false);
+                }
+            });
+        }
+
         // Utility functions
         function debounce(func, wait) {
             let timeout;
@@ -1876,14 +1939,6 @@
                 clearTimeout(timeout);
                 timeout = setTimeout(later, wait);
             };
-        }
-
-        function isMobileDevice() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        }
-
-        function isIOSDevice() {
-            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         }
 
         // Modal functions
@@ -1934,7 +1989,7 @@
         }
 
         // Close modal when clicking outside the image
-        document.getElementById('imageModal').addEventListener('click', function(e) {
+        document.getElementById('imageModal')?.addEventListener('click', function(e) {
             if (e.target === this) {
                 closeImageModal();
             }
@@ -1950,21 +2005,58 @@
         // Initialize form
         document.addEventListener('DOMContentLoaded', function() {
             try {
+                console.log('🚀 Initializing CV Form...');
+                console.log('📱 Device Info:', {
+                    mobile: isMobileDevice(),
+                    iOS: isIOSDevice(),
+                    desktop: isDesktopDevice(),
+                    userAgent: navigator.userAgent,
+                    screen: `${window.innerWidth}x${window.innerHeight}`
+                });
+                
                 getProductFromURL();
                 setupPackageListeners();
                 updateProgress();
                 setupFormValidation();
                 setupLinkedInInput();
                 setupDateValidation();
+                setupDeviceSpecificFixes();
                 
-                if (isMobileDevice()) {
-                    document.body.classList.add('mobile-device');
-                }
+                // Detect private mode
+                detectPrivateMode().then(isPrivate => {
+                    console.log('🔒 Private mode:', isPrivate);
+                    if (isPrivate) {
+                        console.warn('⚠️ Private browsing detected - some features may be limited');
+                    }
+                });
+                
+                console.log('✅ Form initialized successfully');
             } catch (error) {
-                console.error('Initialization error:', error);
+                console.error('❌ Initialization error:', error);
                 showNotification('Terjadi kesalahan saat memuat form. Silakan refresh halaman.', 'error');
             }
         });
+
+        // Setup device-specific fixes
+        function setupDeviceSpecificFixes() {
+            if (isMobileDevice()) {
+                document.body.classList.add('mobile-device');
+                
+                // Prevent zoom on input focus for iOS
+                if (isIOSDevice()) {
+                    const viewport = document.querySelector('meta[name="viewport"]');
+                    if (viewport) {
+                        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                    }
+                    
+                    // Fix input font size to prevent zoom
+                    const inputs = document.querySelectorAll('input, textarea, select');
+                    inputs.forEach(input => {
+                        input.style.fontSize = '16px';
+                    });
+                }
+            }
+        }
 
         // Setup LinkedIn input dengan prefix otomatis
         function setupLinkedInInput() {
@@ -2025,10 +2117,14 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const productParam = urlParams.get('product');
                 
+                console.log('🔍 Product parameter:', productParam);
+                
                 if (productParam && products[productParam.toLowerCase()]) {
                     updateSelectedProduct(products[productParam.toLowerCase()]);
+                    console.log('✅ Product found and updated');
                 } else {
                     showNoProductSelected();
+                    console.log('⚠️ No valid product parameter found');
                 }
             } catch (error) {
                 console.error('Error getting product from URL:', error);
@@ -2132,6 +2228,20 @@
                             }
                         });
                     }
+                });
+
+                // Setup radio option click handlers
+                document.querySelectorAll('.radio-option').forEach(option => {
+                    option.addEventListener('click', function(e) {
+                        const radio = this.querySelector('input[type="radio"]');
+                        if (radio && !radio.checked) {
+                            radio.checked = true;
+                            
+                            // Trigger change event
+                            const event = new Event('change', { bubbles: true });
+                            radio.dispatchEvent(event);
+                        }
+                    });
                 });
             } catch (error) {
                 console.error('Error setting up package listeners:', error);
@@ -2237,12 +2347,6 @@
                     const year = date.getFullYear();
                     
                     if (year < 1900 || year > new Date().getFullYear()) {
-                        field.classList.add('error');
-                        return false;
-                    }
-                    
-                    const yearString = field.value.split('-')[0];
-                    if (yearString.length !== 4) {
                         field.classList.add('error');
                         return false;
                     }
@@ -2421,7 +2525,7 @@
             }
         }
 
-        // Enhanced form submission
+        // Enhanced form submission with better WhatsApp integration
         function submitForm() {
             // Prevent multiple submissions
             if (isSubmitting) {
@@ -2439,6 +2543,8 @@
             const btnLoading = document.getElementById('btnLoading');
 
             try {
+                console.log('📤 Starting form submission...');
+                
                 // Set loading state
                 isSubmitting = true;
                 if (btnText) btnText.style.display = 'none';
@@ -2447,15 +2553,16 @@
 
                 // Collect form data
                 const formData = collectFormData();
+                console.log('📋 Form data collected:', formData);
                 
                 // Show success notification
                 showNotification('Data berhasil dikumpulkan! Mengarahkan ke WhatsApp...', 'success');
                 
-                // Send to WhatsApp with all form data
+                // Send to WhatsApp with enhanced compatibility
                 sendToWhatsApp(formData);
 
             } catch (error) {
-                console.error('Form submission error:', error);
+                console.error('❌ Form submission error:', error);
                 showNotification('Terjadi kesalahan saat memproses form. Data akan tetap dikirim ke WhatsApp.', 'error');
                 
                 // Still try to send to WhatsApp
@@ -2463,8 +2570,14 @@
                     const formData = collectFormData();
                     sendToWhatsApp(formData);
                 } catch (fallbackError) {
-                    console.error('Fallback error:', fallbackError);
-                    showNotification('Terjadi kesalahan. Silakan hubungi kami langsung via WhatsApp.', 'error');
+                    console.error('❌ Fallback error:', fallbackError);
+                    showNotification('Terjadi kesalahan. Silakan hubungi kami langsung via WhatsApp: +62 857-2455-9033', 'error');
+                    
+                    // Last resort - direct WhatsApp link
+                    setTimeout(() => {
+                        const directWA = 'https://wa.me/6285724559033?text=Halo,%20saya%20mengalami%20masalah%20dengan%20form%20CV.%20Mohon%20bantuan.';
+                        openWhatsApp(directWA);
+                    }, 2000);
                 }
             } finally {
                 // Reset button state after delay
@@ -2483,35 +2596,35 @@
             
             try {
                 // Basic info
-                data.nama = document.getElementById('nama')?.value || '';
-                data.email = document.getElementById('email')?.value || '';
-                data.nomor_ponsel = document.getElementById('nomor_ponsel')?.value || '';
+                data.nama = document.getElementById('nama')?.value?.trim() || '';
+                data.email = document.getElementById('email')?.value?.trim() || '';
+                data.nomor_ponsel = document.getElementById('nomor_ponsel')?.value?.trim() || '';
                 data.desain = document.getElementById('selectedProduct')?.value || '';
                 data.paket = document.querySelector('input[name="paket"]:checked')?.value || '';
                 
                 // LinkedIn with prefix
-                const linkedinInput = document.getElementById('linkedin')?.value || '';
+                const linkedinInput = document.getElementById('linkedin')?.value?.trim() || '';
                 data.linkedin = linkedinInput ? `https://linkedin.com/in/${linkedinInput}` : 'Tidak diisi';
                 
                 // Other personal info
-                data.media_sosial = document.getElementById('media_sosial')?.value || '';
-                data.portofolio = document.getElementById('portofolio')?.value || 'Tidak diisi';
-                data.tempat_lahir = document.getElementById('tempat_lahir')?.value || '';
+                data.media_sosial = document.getElementById('media_sosial')?.value?.trim() || '';
+                data.portofolio = document.getElementById('portofolio')?.value?.trim() || 'Tidak diisi';
+                data.tempat_lahir = document.getElementById('tempat_lahir')?.value?.trim() || '';
                 data.tanggal_lahir = document.getElementById('tanggal_lahir')?.value || '';
-                data.kota = document.getElementById('kota')?.value || '';
-                data.alamat = document.getElementById('alamat')?.value || '';
+                data.kota = document.getElementById('kota')?.value?.trim() || '';
+                data.alamat = document.getElementById('alamat')?.value?.trim() || '';
                 
                 // Languages
                 data.bahasa_indonesia = document.querySelector('input[name="bahasa_indonesia"]:checked')?.value || '';
                 data.bahasa_inggris = document.querySelector('input[name="bahasa_inggris"]:checked')?.value || '';
-                data.bahasa_lain = document.getElementById('bahasa_lain')?.value || 'Tidak ada';
+                data.bahasa_lain = document.getElementById('bahasa_lain')?.value?.trim() || 'Tidak ada';
                 
                 // Long form data
-                data.deskripsi_diri = document.getElementById('deskripsi_diri')?.value || '';
-                data.pengalaman_kerja = document.getElementById('pengalaman_kerja')?.value || '';
-                data.riwayat_pendidikan = document.getElementById('riwayat_pendidikan')?.value || '';
-                data.hard_skill = document.getElementById('hard_skill')?.value || '';
-                data.soft_skill = document.getElementById('soft_skill')?.value || '';
+                data.deskripsi_diri = document.getElementById('deskripsi_diri')?.value?.trim() || '';
+                data.pengalaman_kerja = document.getElementById('pengalaman_kerja')?.value?.trim() || '';
+                data.riwayat_pendidikan = document.getElementById('riwayat_pendidikan')?.value?.trim() || '';
+                data.hard_skill = document.getElementById('hard_skill')?.value?.trim() || '';
+                data.soft_skill = document.getElementById('soft_skill')?.value?.trim() || '';
                 
                 return data;
             } catch (error) {
@@ -2520,79 +2633,363 @@
             }
         }
 
-        // Send data to WhatsApp
+        // Enhanced WhatsApp integration with multiple fallback methods
         function sendToWhatsApp(formData) {
             try {
-                const pesanWA = encodeURIComponent(
-                    `🔥 *FORM PEMESANAN CV* 🔥\n\n` +
-                    `👤 *DATA PRIBADI*\n` +
-                    `• Nama: ${formData.nama}\n` +
-                    `• Email: ${formData.email}\n` +
-                    `• No. HP/WA: ${formData.nomor_ponsel}\n` +
-                    `• LinkedIn: ${formData.linkedin}\n` +
-                    `• Media Sosial: ${formData.media_sosial}\n` +
-                    `• Portofolio: ${formData.portofolio}\n\n` +
-                    
-                    `📍 *DATA TEMPAT & TANGGAL*\n` +
-                    `• Tempat Lahir: ${formData.tempat_lahir}\n` +
-                    `• Tanggal Lahir: ${formData.tanggal_lahir}\n` +
-                    `• Kota Domisili: ${formData.kota}\n` +
-                    `• Alamat KTP: ${formData.alamat}\n\n` +
-                    
-                    `🌐 *PENGUASAAN BAHASA*\n` +
-                    `• Bahasa Indonesia: ${formData.bahasa_indonesia}\n` +
-                    `• Bahasa Inggris: ${formData.bahasa_inggris}\n` +
-                    `• Bahasa Lain: ${formData.bahasa_lain}\n\n` +
-                    
-                    `🎯 *PAKET & DESAIN*\n` +
-                    `• Paket: ${formData.paket}\n` +
-                    `• Desain CV: ${formData.desain}\n\n` +
-                    
-                    `📝 *DESKRIPSI DIRI*\n` +
-                    `${formData.deskripsi_diri}\n\n` +
-                    
-                    `💼 *PENGALAMAN KERJA*\n` +
-                    `${formData.pengalaman_kerja}\n\n` +
-                    
-                    `🎓 *RIWAYAT PENDIDIKAN*\n` +
-                    `${formData.riwayat_pendidikan}\n\n` +
-                    
-                    `⚙️ *HARD SKILL*\n` +
-                    `${formData.hard_skill}\n\n` +
-                    
-                    `🤝 *SOFT SKILL*\n` +
-                    `${formData.soft_skill}\n\n` +
-                    
-                    `✅ Saya akan segera kirimkan bukti pembayaran dan dokumen pendukung. Terima kasih! 🙏`
-                );
-
+                console.log('📱 Preparing WhatsApp message...');
+                
+                const pesanWA = createWhatsAppMessage(formData);
                 const nomorTujuan = '6285724559033';
-                const whatsappURL = `https://wa.me/${nomorTujuan}?text=${pesanWA}`;
+                
+                // Multiple WhatsApp URL formats for better compatibility
+                const whatsappURLs = [
+                    `https://wa.me/${nomorTujuan}?text=${pesanWA}`,
+                    `https://api.whatsapp.com/send?phone=${nomorTujuan}&text=${pesanWA}`,
+                    `whatsapp://send?phone=${nomorTujuan}&text=${pesanWA}`
+                ];
+
+                console.log('🔗 WhatsApp URLs prepared:', whatsappURLs.length);
 
                 setTimeout(() => {
-                    try {
-                        if (isMobileDevice()) {
-                            window.location.href = whatsappURL;
-                        } else {
-                            const newWindow = window.open(whatsappURL, '_blank');
-                            if (!newWindow) {
-                                window.location.href = whatsappURL;
-                            }
-                        }
-                        
-                        // Show success message
-                        showNotification('Berhasil mengarahkan ke WhatsApp! Silakan kirim pesan tersebut.', 'success');
-                        
-                    } catch (error) {
-                        console.error('Error redirecting to WhatsApp:', error);
-                        showNotification('Tidak dapat membuka WhatsApp otomatis. Silakan buka WhatsApp manual dan hubungi kami.', 'error');
+                    let success = false;
+                    
+                    // Try different methods based on device and browser
+                    if (isMobileDevice()) {
+                        success = openWhatsAppMobile(whatsappURLs);
+                    } else {
+                        success = openWhatsAppDesktop(whatsappURLs);
                     }
+                    
+                    if (success) {
+                        showNotification('Berhasil mengarahkan ke WhatsApp! Silakan kirim pesan tersebut.', 'success');
+                    } else {
+                        showFallbackOptions(nomorTujuan, formData);
+                    }
+                    
                 }, 1000);
 
             } catch (error) {
-                console.error('Error sending to WhatsApp:', error);
-                showNotification('Terjadi kesalahan saat menyiapkan pesan WhatsApp. Silakan hubungi kami langsung.', 'error');
+                console.error('❌ Error sending to WhatsApp:', error);
+                showFallbackOptions('6285724559033', formData);
             }
+        }
+
+        // Create WhatsApp message
+        function createWhatsAppMessage(formData) {
+            const message = 
+                `Halo Kak,\n` +
+				`Saya sudah mengisi form pemesanan CV.\n\n` +
+
+                `*PAKET & DESAIN*\n` +
+                `• Paket : ${formData.paket}\n` +
+                `• Desain CV : ${formData.desain}\n\n` +
+
+                `*DATA PRIBADI*\n` +
+                `• Nama : ${formData.nama}\n` +
+                `• Email : ${formData.email}\n` +
+                `• No. HP/WA : ${formData.nomor_ponsel}\n` +
+                `• LinkedIn : ${formData.linkedin}\n` +
+                `• Media Sosial : ${formData.media_sosial}\n` +
+                `• Portofolio : ${formData.portofolio}\n\n` +
+                
+                `*DATA TEMPAT & TANGGAL*\n` +
+                `• Tempat Lahir : ${formData.tempat_lahir}\n` +
+                `• Tanggal Lahir : ${formData.tanggal_lahir}\n` +
+                `• Kota Domisili : ${formData.kota}\n` +
+                `• Alamat KTP : ${formData.alamat}\n\n` +
+                
+                `*PENGUASAAN BAHASA*\n` +
+                `• Bahasa Indonesia : ${formData.bahasa_indonesia}\n` +
+                `• Bahasa Inggris : ${formData.bahasa_inggris}\n` +
+                `• Bahasa Lain : ${formData.bahasa_lain}\n\n` +
+                
+                `*DESKRIPSI DIRI*\n` +
+                `${formData.deskripsi_diri}\n\n` +
+                
+                `*PENGALAMAN KERJA*\n` +
+                `${formData.pengalaman_kerja}\n\n` +
+                
+                `*RIWAYAT PENDIDIKAN*\n` +
+                `${formData.riwayat_pendidikan}\n\n` +
+                
+                `*HARD SKILL*\n` +
+                `${formData.hard_skill}\n\n` +
+                
+                `*SOFT SKILL*\n` +
+                `${formData.soft_skill}\n\n` +
+                
+                `Saya akan segera kirimkan bukti pembayaran dan dokumen pendukung. Terima kasih!`;
+
+            return encodeURIComponent(message);
+        }
+
+        // Enhanced mobile WhatsApp opening
+        function openWhatsAppMobile(urls) {
+            try {
+                console.log('📱 Opening WhatsApp on mobile device...');
+                
+                // For mobile, try the app scheme first, then web
+                const mobileUrls = [
+                    urls[2], // whatsapp:// scheme
+                    urls[0], // wa.me
+                    urls[1]  // api.whatsapp.com
+                ];
+
+                for (let i = 0; i < mobileUrls.length; i++) {
+                    try {
+                        console.log(`🔄 Trying mobile URL ${i + 1}:`, mobileUrls[i].substring(0, 50) + '...');
+                        
+                        if (i === 0) {
+                            // Try app scheme first
+                            window.location.href = mobileUrls[i];
+                            return true;
+                        } else {
+                            // Fallback to web
+                            const opened = window.open(mobileUrls[i], '_blank');
+                            if (opened && !opened.closed) {
+                                return true;
+                            }
+                            // If popup blocked, try direct navigation
+                            window.location.href = mobileUrls[i];
+                            return true;
+                        }
+                    } catch (e) {
+                        console.warn(`⚠️ Mobile URL ${i + 1} failed:`, e.message);
+                        continue;
+                    }
+                }
+                
+                return false;
+            } catch (error) {
+                console.error('❌ Error opening WhatsApp mobile:', error);
+                return false;
+            }
+        }
+
+        // Enhanced desktop WhatsApp opening
+        function openWhatsAppDesktop(urls) {
+            try {
+                console.log('🖥️ Opening WhatsApp on desktop device...');
+                
+                // For desktop, try multiple methods
+                const methods = [
+                    () => {
+                        // Method 1: window.open with specific parameters
+                        console.log('🔄 Trying method 1: window.open with parameters');
+                        const popup = window.open(
+                            urls[0], 
+                            'whatsapp',
+                            'width=800,height=600,scrollbars=yes,resizable=yes,toolbar=no,menubar=no'
+                        );
+                        
+                        if (popup && !popup.closed) {
+                            // Check if popup actually opened
+                            setTimeout(() => {
+                                if (!popup.closed) {
+                                    console.log('✅ Method 1 successful');
+                                    return true;
+                                }
+                            }, 100);
+                            return true;
+                        }
+                        return false;
+                    },
+                    
+                    () => {
+                        // Method 2: Create invisible iframe
+                        console.log('🔄 Trying method 2: iframe');
+                        const iframe = document.createElement('iframe');
+                        iframe.style.display = 'none';
+                        iframe.src = urls[0];
+                        document.body.appendChild(iframe);
+                        
+                        setTimeout(() => {
+                            document.body.removeChild(iframe);
+                        }, 3000);
+                        
+                        return true;
+                    },
+                    
+                    () => {
+                        // Method 3: Create temporary link and click
+                        console.log('🔄 Trying method 3: temporary link');
+                        const link = document.createElement('a');
+                        link.href = urls[0];
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                        
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        
+                        return true;
+                    },
+                    
+                    () => {
+                        // Method 4: Direct location change
+                        console.log('🔄 Trying method 4: location change');
+                        window.location.href = urls[0];
+                        return true;
+                    }
+                ];
+
+                // Try each method with delay
+                for (let i = 0; i < methods.length; i++) {
+                    try {
+                        if (methods[i]()) {
+                            console.log(`✅ Desktop method ${i + 1} attempted`);
+                            return true;
+                        }
+                    } catch (e) {
+                        console.warn(`⚠️ Desktop method ${i + 1} failed:`, e.message);
+                        continue;
+                    }
+                }
+                
+                return false;
+            } catch (error) {
+                console.error('❌ Error opening WhatsApp desktop:', error);
+                return false;
+            }
+        }
+
+        // Universal WhatsApp opener
+        function openWhatsApp(url) {
+            try {
+                console.log('🔗 Opening WhatsApp URL:', url.substring(0, 50) + '...');
+                
+                // Try multiple methods simultaneously for maximum compatibility
+                const methods = [];
+                
+                // Method 1: window.open
+                methods.push(new Promise((resolve) => {
+                    try {
+                        const popup = window.open(url, '_blank', 'noopener,noreferrer');
+                        setTimeout(() => resolve(popup && !popup.closed), 500);
+                    } catch (e) {
+                        resolve(false);
+                    }
+                }));
+                
+                // Method 2: location.href (with delay)
+                setTimeout(() => {
+                    try {
+                        window.location.href = url;
+                    } catch (e) {
+                        console.warn('Location change failed:', e);
+                    }
+                }, 1000);
+                
+                // Method 3: Create link and click
+                setTimeout(() => {
+                    try {
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.target = '_blank';
+                        link.style.display = 'none';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    } catch (e) {
+                        console.warn('Link click failed:', e);
+                    }
+                }, 1500);
+                
+                return true;
+            } catch (error) {
+                console.error('❌ Error in openWhatsApp:', error);
+                return false;
+            }
+        }
+
+        // Show fallback options when WhatsApp fails
+        function showFallbackOptions(phoneNumber, formData) {
+            console.log('⚠️ Showing fallback options');
+            
+            showNotification(
+                `Tidak dapat membuka WhatsApp otomatis. Silakan hubungi langsung: +${phoneNumber} atau salin data di bawah ini.`,
+                'error'
+            );
+            
+            // Create fallback modal or copy-able text
+            setTimeout(() => {
+                const fallbackMessage = createFallbackMessage(formData);
+                
+                // Try to copy to clipboard
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(fallbackMessage).then(() => {
+                        showNotification('Data formulir berhasil disalin ke clipboard!', 'success');
+                    }).catch(() => {
+                        showTextFallback(fallbackMessage, phoneNumber);
+                    });
+                } else {
+                    showTextFallback(fallbackMessage, phoneNumber);
+                }
+            }, 2000);
+        }
+
+        // Create fallback message (plain text)
+        function createFallbackMessage(formData) {
+            return `FORM PEMESANAN CV
+
+DATA PRIBADI
+Nama: ${formData.nama}
+Email: ${formData.email}
+No. HP/WA: ${formData.nomor_ponsel}
+LinkedIn: ${formData.linkedin}
+Media Sosial: ${formData.media_sosial}
+Portofolio: ${formData.portofolio}
+
+DATA TEMPAT & TANGGAL
+Tempat Lahir: ${formData.tempat_lahir}
+Tanggal Lahir: ${formData.tanggal_lahir}
+Kota Domisili: ${formData.kota}
+Alamat KTP: ${formData.alamat}
+
+PENGUASAAN BAHASA
+Bahasa Indonesia: ${formData.bahasa_indonesia}
+Bahasa Inggris: ${formData.bahasa_inggris}
+Bahasa Lain: ${formData.bahasa_lain}
+
+PAKET & DESAIN
+Paket: ${formData.paket}
+Desain CV: ${formData.desain}
+
+DESKRIPSI DIRI
+${formData.deskripsi_diri}
+
+PENGALAMAN KERJA
+${formData.pengalaman_kerja}
+
+RIWAYAT PENDIDIKAN
+${formData.riwayat_pendidikan}
+
+HARD SKILL
+${formData.hard_skill}
+
+SOFT SKILL
+${formData.soft_skill}
+
+Saya akan segera kirimkan bukti pembayaran dan dokumen pendukung. Terima kasih!`;
+        }
+
+        // Show text fallback
+        function showTextFallback(message, phoneNumber) {
+            const modal = document.createElement('div');
+            modal.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10001; display: flex; align-items: center; justify-content: center; padding: 20px;">
+                    <div style="background: white; padding: 30px; border-radius: 15px; max-width: 600px; max-height: 80vh; overflow-y: auto; color: black;">
+                        <h3 style="margin-bottom: 20px; color: #333;">Data Formulir Anda</h3>
+                        <p style="margin-bottom: 15px; color: #666;">Silakan salin data di bawah ini dan kirim via WhatsApp ke: <strong>+${phoneNumber}</strong></p>
+                        <textarea readonly style="width: 100%; height: 300px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; font-family: monospace; font-size: 12px; resize: vertical;">${message}</textarea>
+                        <div style="margin-top: 20px; text-align: center;">
+                            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #4CAF50; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; margin-right: 10px;">Tutup</button>
+                            <button onclick="navigator.clipboard.writeText(this.parentElement.previousElementSibling.value).then(()=>alert('Disalin ke clipboard!')).catch(()=>alert('Gagal menyalin'))" style="background: #2196F3; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">Salin Teks</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
         }
 
         // Reset form after successful submission
@@ -2633,10 +3030,12 @@
 
         // Network status handlers
         window.addEventListener('online', function() {
+            console.log('🌐 Connection restored');
             showNotification('Koneksi internet tersambung kembali', 'success');
         });
 
         window.addEventListener('offline', function() {
+            console.log('🌐 Connection lost');
             showNotification('Koneksi internet terputus. Silakan periksa koneksi Anda.', 'error');
         });
 
@@ -2677,84 +3076,15 @@
 
         // Global error handler
         window.addEventListener('error', function(e) {
-            console.error('Global error:', e.error);
+            console.error('💥 Global error:', e.error);
             if (e.error && e.error.message && e.error.message.includes('fetch')) {
                 showNotification('Terjadi masalah koneksi. Pastikan internet Anda stabil.', 'error');
             }
         });
 
         window.addEventListener('unhandledrejection', function(e) {
-            console.error('Unhandled promise rejection:', e.reason);
+            console.error('💥 Unhandled promise rejection:', e.reason);
         });
-
-        // Add button event listeners for better compatibility
-        document.addEventListener('DOMContentLoaded', function() {
-            // Make sure submit button works on all devices
-            const submitBtn = document.getElementById('submitBtn');
-            if (submitBtn) {
-                // Remove any existing listeners
-                submitBtn.onclick = null;
-                
-                // Add multiple event types for maximum compatibility
-                submitBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    submitForm();
-                });
-                
-                submitBtn.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    submitForm();
-                });
-            }
-            
-            // Ensure radio buttons work properly
-            document.querySelectorAll('.radio-option').forEach(option => {
-                option.addEventListener('click', function(e) {
-                    const radio = this.querySelector('input[type="radio"]');
-                    if (radio && !radio.checked) {
-                        radio.checked = true;
-                        
-                        // Trigger change event
-                        const event = new Event('change', { bubbles: true });
-                        radio.dispatchEvent(event);
-                        
-                        // Update visual state
-                        const packageType = radio.value.toLowerCase().includes('basic') ? 'basic' : 'premium';
-                        selectPackage(packageType);
-                    }
-                });
-            });
-        });
-
-        // iOS Safari fixes
-        if (isIOSDevice()) {
-            // Prevent viewport zoom on input focus
-            const viewport = document.querySelector('meta[name="viewport"]');
-            if (viewport) {
-                viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-            }
-            
-            // Fix input font size to prevent zoom
-            const inputs = document.querySelectorAll('input, textarea, select');
-            inputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.style.fontSize = '16px';
-                });
-                
-                input.addEventListener('blur', function() {
-                    this.style.fontSize = '';
-                });
-            });
-            
-            // Fix button touch handling
-            const buttons = document.querySelectorAll('.btn, .submit-btn');
-            buttons.forEach(button => {
-                button.style.cursor = 'pointer';
-                button.style.WebkitTapHighlightColor = 'transparent';
-            });
-        }
 
         // Ensure form validation works on all browsers
         function validateFormCompatibility() {
@@ -2778,12 +3108,19 @@
         // Call compatibility check
         validateFormCompatibility();
 
-        // Console log for debugging
-        console.log('CV Form initialized successfully');
-        console.log('Current page:', currentPage);
-        console.log('Total pages:', totalPages);
-        console.log('Mobile device:', isMobileDevice());
-        console.log('iOS device:', isIOSDevice());
+        // Enhanced console logging for debugging
+        console.log('🚀 CV Form Script Loaded Successfully');
+        console.log('📊 Environment Info:', {
+            currentPage,
+            totalPages,
+            isMobile: isMobileDevice(),
+            isIOS: isIOSDevice(),
+            isDesktop: isDesktopDevice(),
+            browser: getBrowserInfo(),
+            userAgent: navigator.userAgent,
+            screen: `${window.innerWidth}x${window.innerHeight}`,
+            timestamp: new Date().toISOString()
+        });
     </script>
 </body>
 </html>
