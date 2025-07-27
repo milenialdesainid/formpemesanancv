@@ -2678,7 +2678,7 @@
         function createWhatsAppMessage(formData) {
             const message = 
                 `Halo Kak,\n` +
-				`Saya sudah mengisi form pemesanan CV.\n\n` +
+		`Saya sudah mengisi form pemesanan CV.\n\n` +
 
                 `*PAKET & DESAIN*\n` +
                 `• Paket : ${formData.paket}\n` +
@@ -2930,7 +2930,12 @@
 
         // Create fallback message (plain text)
         function createFallbackMessage(formData) {
-            return `FORM PEMESANAN CV
+            return `Halo Kak,
+		    Saya sudah mengisi form pemesanan CV.
+
+PAKET & DESAIN
+Paket: ${formData.paket}
+Desain CV: ${formData.desain}
 
 DATA PRIBADI
 Nama: ${formData.nama}
@@ -2950,10 +2955,6 @@ PENGUASAAN BAHASA
 Bahasa Indonesia: ${formData.bahasa_indonesia}
 Bahasa Inggris: ${formData.bahasa_inggris}
 Bahasa Lain: ${formData.bahasa_lain}
-
-PAKET & DESAIN
-Paket: ${formData.paket}
-Desain CV: ${formData.desain}
 
 DESKRIPSI DIRI
 ${formData.deskripsi_diri}
