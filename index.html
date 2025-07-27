@@ -103,9 +103,12 @@
             -moz-osx-font-smoothing: grayscale;
             position: relative;
             background-image: 
-                radial-gradient(circle at 20% 50%, rgba(79, 70, 229, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(79, 70, 229, 0.08) 0%, transparent 70%),
+                radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.06) 0%, transparent 70%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 70%);
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
         }
 
         /* Container */
@@ -344,7 +347,7 @@
 
         .product-preview {
             display: inline-block;
-            max-width: 200px;
+            max-width: 280px;
             width: 100%;
             position: relative;
             border-radius: var(--radius-lg);
@@ -443,6 +446,26 @@
         .form-group textarea::placeholder {
             color: var(--text-muted);
             font-weight: 400;
+        }
+
+        /* LinkedIn input styling */
+        .linkedin-input-wrapper {
+            position: relative;
+        }
+
+        .linkedin-prefix {
+            position: absolute;
+            left: var(--space-5);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: var(--font-base);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .linkedin-input-with-prefix {
+            padding-left: 170px !important;
         }
 
         .form-group textarea {
@@ -845,7 +868,7 @@
         }
 
         .qris-image {
-            max-width: 250px;
+            max-width: 300px;
             width: 100%;
             height: auto;
             border-radius: var(--radius-lg);
@@ -1157,6 +1180,17 @@
             background: var(--accent-primary);
         }
 
+        /* Media queries untuk ukuran gambar */
+        @media (min-width: 769px) {
+            .product-preview {
+                max-width: 200px;
+            }
+            
+            .qris-image {
+                max-width: 220px;
+            }
+        }
+
         /* Enhanced Mobile Responsive */
         @media (max-width: 768px) {
             .form-container {
@@ -1247,6 +1281,14 @@
             .form-group textarea {
                 min-height: 5rem;
             }
+
+            .linkedin-input-with-prefix {
+                padding-left: 140px !important;
+            }
+
+            .linkedin-prefix {
+                font-size: var(--font-xs);
+            }
         }
 
         @media (max-width: 480px) {
@@ -1293,6 +1335,10 @@
             .next-steps,
             .payment-section {
                 padding: var(--space-3);
+            }
+
+            .linkedin-input-with-prefix {
+                padding-left: 120px !important;
             }
         }
 
@@ -1437,8 +1483,23 @@
 
                         <!-- LinkedIn -->
                         <div class="form-group">
-                            <label for="linkedin">LinkedIn / Media Sosial <span class="required">*</span></label>
-                            <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/username" required>
+                            <label for="linkedin">LinkedIn (Opsional)</label>
+                            <div class="linkedin-input-wrapper">
+                                <input type="text" id="linkedin" name="linkedin" placeholder="username" class="linkedin-input-with-prefix">
+                                <span class="linkedin-prefix">https://linkedin.com/in/</span>
+                            </div>
+                        </div>
+
+                        <!-- Media Sosial -->
+                        <div class="form-group">
+                            <label for="media_sosial">Media Sosial (Instagram/TikTok) <span class="required">*</span></label>
+                            <input type="text" id="media_sosial" name="media_sosial" placeholder="@username" required>
+                        </div>
+
+                        <!-- Link Portofolio -->
+                        <div class="form-group">
+                            <label for="portofolio">Link Portofolio (Opsional)</label>
+                            <input type="url" id="portofolio" name="link_portofolio" placeholder="https://portofolio-anda.com">
                         </div>
 
                         <!-- Tempat & Tanggal Lahir -->
@@ -1865,6 +1926,8 @@
                 updateProgress();
                 setupFormValidation();
                 setupIOSFixes();
+                setupLinkedInInput();
+                setupDateValidation();
                 
                 if (isMobileDevice()) {
                     const body = document.body;
@@ -1877,6 +1940,63 @@
                 showNotification('Terjadi kesalahan saat memuat form. Silakan refresh halaman.', 'error');
             }
         });
+
+        // Setup LinkedIn input dengan prefix otomatis
+        function setupLinkedInInput() {
+            try {
+                const linkedinInput = document.getElementById('linkedin');
+                if (linkedinInput) {
+                    linkedinInput.addEventListener('input', function() {
+                        // Hapus prefix jika user mengetiknya
+                        let value = this.value;
+                        if (value.startsWith('https://linkedin.com/in/')) {
+                            value = value.replace('https://linkedin.com/in/', '');
+                            this.value = value;
+                        }
+                        if (value.startsWith('linkedin.com/in/')) {
+                            value = value.replace('linkedin.com/in/', '');
+                            this.value = value;
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error setting up LinkedIn input:', error);
+            }
+        }
+
+        // Setup validasi tanggal lahir
+        function setupDateValidation() {
+            try {
+                const dateInput = document.getElementById('tanggal_lahir');
+                if (dateInput) {
+                    // Set max date ke hari ini
+                    const today = new Date().toISOString().split('T')[0];
+                    dateInput.setAttribute('max', today);
+                    
+                    // Set min date ke 100 tahun yang lalu
+                    const minDate = new Date();
+                    minDate.setFullYear(minDate.getFullYear() - 100);
+                    dateInput.setAttribute('min', minDate.toISOString().split('T')[0]);
+                    
+                    dateInput.addEventListener('input', function() {
+                        // Validasi real-time
+                        const value = this.value;
+                        if (value) {
+                            const year = parseInt(value.split('-')[0]);
+                            const currentYear = new Date().getFullYear();
+                            
+                            if (year < 1900 || year > currentYear) {
+                                this.setCustomValidity('Tahun harus antara 1900 dan ' + currentYear);
+                            } else {
+                                this.setCustomValidity('');
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error setting up date validation:', error);
+            }
+        }
 
         // iOS specific fixes
         function setupIOSFixes() {
@@ -2090,9 +2210,27 @@
                     }
                 }
                 
-                if ((field.type === 'url' || field.name === 'linkedin') && field.value) {
+                if (field.type === 'url' && field.value) {
                     const urlRegex = /^https?:\/\/.+/;
                     if (!urlRegex.test(field.value)) {
+                        field.classList.add('error');
+                        return false;
+                    }
+                }
+                
+                // Validasi tanggal lahir untuk tahun 4 digit
+                if (field.type === 'date' && field.value) {
+                    const date = new Date(field.value);
+                    const year = date.getFullYear();
+                    
+                    if (year < 1900 || year > new Date().getFullYear()) {
+                        field.classList.add('error');
+                        return false;
+                    }
+                    
+                    // Pastikan tahun tepat 4 digit
+                    const yearString = field.value.split('-')[0];
+                    if (yearString.length !== 4) {
                         field.classList.add('error');
                         return false;
                     }
@@ -2292,6 +2430,13 @@
 
             const formData = new FormData(this);
             
+            // Format LinkedIn dengan prefix
+            const linkedinInput = document.getElementById('linkedin');
+            if (linkedinInput && linkedinInput.value.trim()) {
+                const linkedinFormatted = `https://linkedin.com/in/${linkedinInput.value.trim()}`;
+                formData.set('linkedin', linkedinFormatted);
+            }
+            
             const timeoutPromise = new Promise((_, reject) => {
                 setTimeout(() => reject(new Error('Request timeout')), 30000);
             });
@@ -2352,6 +2497,11 @@
                 const email = document.getElementById('email')?.value || '';
                 const desain = document.getElementById('selectedProduct')?.value || '';
                 const paket = document.querySelector('input[name="paket"]:checked')?.value || '';
+                const linkedin = document.getElementById('linkedin')?.value || '';
+                const mediaSosial = document.getElementById('media_sosial')?.value || '';
+                
+                // Format LinkedIn jika ada
+                const linkedinFormatted = linkedin ? `https://linkedin.com/in/${linkedin}` : 'Tidak diisi';
 
                 const pesanWA = encodeURIComponent(
                     `Halo Kak,\n` +
@@ -2359,7 +2509,9 @@
                     `Nama: ${nama}\n` +
                     `Email: ${email}\n` +
                     `Paket: ${paket}\n` +
-                    `Desain CV: ${desain}\n\n` +
+                    `Desain CV: ${desain}\n` +
+                    `LinkedIn: ${linkedinFormatted}\n` +
+                    `Media Sosial: ${mediaSosial}\n\n` +
                     `Saya akan segera kirimkan bukti pembayaran dan dokumen pendukung. Terima kasih!`
                 );
 
