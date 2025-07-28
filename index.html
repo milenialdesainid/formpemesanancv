@@ -1498,7 +1498,7 @@
         }
     </style>
     <!-- EmailJS SDK -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/emailjs-com/3.2.0/email.min.js"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 <body>
     <div class="form-container">
@@ -2066,22 +2066,47 @@
             };
         }
 
-        // Initialize EmailJS
+        // Initialize EmailJS with proper error handling
         function initializeEmailJS() {
-            try {
-                emailjs.init('KHppQ994Vxia_XNa7');
-                console.log('✅ EmailJS initialized successfully');
-                return true;
-            } catch (error) {
-                console.error('❌ EmailJS initialization failed:', error);
-                return false;
-            }
+            return new Promise((resolve) => {
+                let attempts = 0;
+                const maxAttempts = 10;
+                
+                function checkEmailJS() {
+                    attempts++;
+                    
+                    if (typeof emailjs !== 'undefined' && emailjs.init) {
+                        try {
+                            emailjs.init('KHppQ994Vxia_XNa7');
+                            console.log('✅ EmailJS initialized successfully');
+                            resolve(true);
+                        } catch (error) {
+                            console.error('❌ EmailJS initialization failed:', error);
+                            resolve(false);
+                        }
+                    } else if (attempts < maxAttempts) {
+                        console.log(`⏳ Waiting for EmailJS to load... (${attempts}/${maxAttempts})`);
+                        setTimeout(checkEmailJS, 200);
+                    } else {
+                        console.error('❌ EmailJS failed to load after maximum attempts');
+                        resolve(false);
+                    }
+                }
+                
+                checkEmailJS();
+            });
         }
 
-        // Send email via EmailJS
+        // Send email via EmailJS with correct service and template IDs
         async function sendEmailJS(formData) {
             try {
                 console.log('📧 Sending email via EmailJS...');
+                
+                // Check if EmailJS is available
+                if (typeof emailjs === 'undefined' || !emailjs.send) {
+                    console.warn('⚠️ EmailJS not available, skipping email send');
+                    return { success: false, error: 'EmailJS not loaded' };
+                }
 
                 const templateParams = {
                     to_name: 'Admin CV',
@@ -2111,8 +2136,8 @@
                 };
 
                 const response = await emailjs.send(
-                    'service_cv_form', // Replace with your EmailJS service ID
-                    'template_cv_order', // Replace with your EmailJS template ID
+                    'formpemesanancv', // Your correct Service ID
+                    'konfirmasipengisianform', // Your correct Template ID
                     templateParams
                 );
 
@@ -2236,7 +2261,7 @@
         });
 
         // Initialize form
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             try {
                 console.log('🚀 Initializing CV Form...');
                 console.log('📱 Device Info:', {
@@ -2247,8 +2272,14 @@
                     screen: `${window.innerWidth}x${window.innerHeight}`
                 });
                 
-                // Initialize EmailJS
-                initializeEmailJS();
+                // Initialize EmailJS first
+                console.log('📧 Initializing EmailJS...');
+                const emailJSReady = await initializeEmailJS();
+                if (emailJSReady) {
+                    console.log('✅ EmailJS ready');
+                } else {
+                    console.warn('⚠️ EmailJS failed to initialize, but form will continue');
+                }
                 
                 getProductFromURL();
                 setupPackageListeners();
@@ -3257,16 +3288,5 @@ Saya akan segera kirimkan bukti pembayaran dan dokumen pendukung. Terima kasih!`
             timestamp: new Date().toISOString()
         });
     </script>
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-<title>Page Title</title>
-</head>
-<body>
-
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
-
 </body>
 </html>
